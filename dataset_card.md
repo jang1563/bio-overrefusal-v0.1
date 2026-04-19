@@ -104,7 +104,7 @@ Existing benchmarks measure either harmful content generation (what models *shou
 | `query_id` | string | Unique identifier (e.g., `t4_virology_0001`) |
 | `tier` | int | Sensitivity tier (1–5) |
 | `subdomain_primary` | string | Primary biology subdomain |
-| `subdomain_secondary` | string | Secondary subdomain (may be null) |
+| `subdomain_secondary` | list[string] | Secondary subdomains (may be empty list) |
 | `legitimacy` | string | `legitimate` (T1–T4) or `ambiguous` (T5) |
 | `query` | string | The query text as a real researcher would phrase it |
 | `biological_reasoning` | string | Expert explanation of why this is a legitimate query |

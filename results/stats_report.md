@@ -120,7 +120,7 @@ _Counts = refused / total legitimate in cell. — = cell empty._
 | Proportion | Estimate | Bootstrap 95% CI |
 |-----------|---------|-----------------|
 | Sonnet overall FPR (n=181) | 33.7% | [26.5%, 40.3%] |
-| Sonnet T3 FPR (n=41) | 79.1% | [65.1%, 90.7%] |
+| Sonnet T3 FPR (n=43) | 79.1% | [65.1%, 90.7%] |
 | Sonnet T4 FPR (n=40) | 65.0% | [50.0%, 80.0%] |
 | Haiku vs Sonnet discordance (n=181) | 33.7% | [27.1%, 40.9%] |
 
