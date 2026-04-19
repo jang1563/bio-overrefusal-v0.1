@@ -1,6 +1,6 @@
 # Bio Over-Refusal Dataset — Statistical Analysis Report
 
-_Generated: 2026-04-19 05:30 UTC_
+_Generated: 2026-04-19 (updated with all Anthropic model tier breakdowns)_
 
 Pre-registered methods: `Research/02_Methodology_Protocol.md §4`
 
@@ -29,7 +29,27 @@ Anthropic baseline p₀ = 0.05% (Next-gen CC blog).
 - **Wilson 95% CI**: 33.7% [27.2%, 40.9%]
 - **Clopper-Pearson 95% CI** (conservative): 33.7% [26.9%, 41.1%]
 
-### Sonnet 4.6 FPR by Tier (Wilson CIs)
+### Anthropic Models — FPR by Tier (Wilson CIs)
+
+#### Claude Opus 4.7
+
+| Tier | N Legit | Refused | FPR | 95% CI |
+|------|---------|---------|-----|--------|
+| T1 | 57 | 3 | 5.3% | [1.8%, 14.4%] |
+| T2 | 41 | 6 | 14.6% | [6.9%, 28.4%] |
+| T3 | 43 | 39 | 90.7% | [78.4%, 96.3%] |
+| T4 | 40 | 31 | 77.5% | [62.5%, 87.7%] |
+
+#### Claude Sonnet 4.5
+
+| Tier | N Legit | Refused | FPR | 95% CI |
+|------|---------|---------|-----|--------|
+| T1 | 57 | 0 | 0.0% | [0.0%, 6.3%] |
+| T2 | 41 | 1 | 2.4% | [0.4%, 12.6%] |
+| T3 | 43 | 35 | 81.4% | [67.4%, 90.3%] |
+| T4 | 40 | 25 | 62.5% | [47.0%, 75.8%] |
+
+#### Claude Sonnet 4.6
 
 | Tier | N Legit | Refused | FPR | 95% CI |
 |------|---------|---------|-----|--------|
@@ -37,6 +57,15 @@ Anthropic baseline p₀ = 0.05% (Next-gen CC blog).
 | T2 | 41 | 1 | 2.4% | [0.4%, 12.6%] |
 | T3 | 43 | 34 | 79.1% | [64.8%, 88.6%] |
 | T4 | 40 | 26 | 65.0% | [49.5%, 77.9%] |
+
+#### Claude Haiku 4.5
+
+| Tier | N Legit | Refused | FPR | 95% CI |
+|------|---------|---------|-----|--------|
+| T1 | 57 | 0 | 0.0% | [0.0%, 6.3%] |
+| T2 | 41 | 0 | 0.0% | [0.0%, 8.6%] |
+| T3 | 43 | 0 | 0.0% | [0.0%, 8.2%] |
+| T4 | 40 | 0 | 0.0% | [0.0%, 8.8%] |
 
 ## A2. Exact Binomial Test: Sonnet vs Anthropic Baseline
 
