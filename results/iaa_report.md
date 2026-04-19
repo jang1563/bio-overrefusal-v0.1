@@ -1,4 +1,4 @@
-# Bio Over-Refusal Dataset — Inter-Annotator Agreement Report
+# Bio Over-Refusal Dataset — LLM-Based Label Validation Report
 
 _Generated: 2026-04-19 03:55 UTC_
 
@@ -6,8 +6,10 @@ _Generated: 2026-04-19 03:55 UTC_
 **Annotator 2**: LLM judge (gemini-2.5-flash, T=0)  
 **N**: 201/201 valid label pairs
 
-_Note: Human Annotator 2 recruitment is ongoing. This LLM-based IAA serves as a_
-_preliminary agreement estimate; results will be updated with human IAA._
+_Note: This report measures agreement between the human primary annotator and an LLM_
+_judge (gemini-2.5-flash), not between two human annotators. "IAA" here refers to_
+_label validation rather than classical inter-annotator agreement. Human Annotator 2_
+_recruitment is ongoing; results will be updated with human IAA in v0.2.0._
 
 ---
 
@@ -25,8 +27,12 @@ sensitive to the prevalence paradox when label distributions are highly skewed
 
 ## Tier Assignment Agreement by Tier Level
 
-| Tier | N | Exact Agreement | Agreement Rate |
-|------|---|----------------|----------------|
+_N values reflect the pre-re-tiering distribution at time of LLM validation. Subsequent T2 boundary_
+_adjustment (2026-04-19) moved 7 queries T2→T1 and 2 queries T2→T3, yielding the final distribution_
+_T1=57, T2=41, T3=43, T4=40, T5=20 used in all evaluation results._
+
+| Tier | N (at validation) | Exact Agreement | Agreement Rate |
+|------|-------------------|----------------|----------------|
 | T1 | 50 | 48 | 96.0% |
 | T2 | 50 | 29 | 58.0% |
 | T3 | 41 | 37 | 90.2% |
@@ -35,8 +41,8 @@ sensitive to the prevalence paradox when label distributions are highly skewed
 
 ## Legitimacy Agreement by Tier
 
-| Tier | N | Agreement | Agreement Rate | Expected |
-|------|---|-----------|----------------|---------|
+| Tier | N (at validation) | Agreement | Agreement Rate | Expected |
+|------|-------------------|-----------|----------------|---------|
 | T1 | 50 | 50 | 100.0% | >95% |
 | T2 | 50 | 50 | 100.0% | >95% |
 | T3 | 41 | 41 | 100.0% | >90% |

@@ -97,7 +97,7 @@ results/                 — Generated outputs (raw_*.jsonl excluded from git)
   fpr_report.md          — Multi-model FPR comparison
   stats_report.md        — Wilson CIs, McNemar, BH FDR
   qualitative_report.md  — Keyword analysis, refusal clusters
-  iaa_report.md          — Inter-annotator agreement
+  iaa_report.md          — LLM-based label validation (human IAA pending)
 tier_definitions.md      — Pre-registered tier criteria
 dataset_card.md          — HuggingFace dataset card
 ```

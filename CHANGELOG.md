@@ -35,6 +35,6 @@
 - `scripts/compute_iaa.py`: LLM-as-Annotator-2 IAA computation
 
 ### Pending (v0.2.0)
-- Phase 3 inter-annotator agreement with human Annotator 2 (LLM placeholder complete)
+- Phase 3 inter-annotator agreement with human Annotator 2 (LLM validation complete; human IAA pending for v0.2.0)
 - arXiv preprint submission
 - HuggingFace public release
