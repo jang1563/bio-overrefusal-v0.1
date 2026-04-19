@@ -1,0 +1,181 @@
+{
+  "models": {
+    "claude-haiku-4-5-20251001": {
+      "n_legit": 181,
+      "k_refused": 0,
+      "fpr": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.0208
+    },
+    "claude-sonnet-4-6": {
+      "n_legit": 181,
+      "k_refused": 61,
+      "fpr": 0.337,
+      "wilson_lo": 0.2722,
+      "wilson_hi": 0.4086
+    },
+    "deepseek-chat": {
+      "n_legit": 181,
+      "k_refused": 0,
+      "fpr": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.0208
+    },
+    "gemini-2.5-flash": {
+      "n_legit": 181,
+      "k_refused": 0,
+      "fpr": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.0208
+    },
+    "gpt-4o-mini": {
+      "n_legit": 181,
+      "k_refused": 0,
+      "fpr": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.0208
+    },
+    "gpt-4o": {
+      "n_legit": 40,
+      "k_refused": 0,
+      "fpr": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.0876
+    },
+    "llama-3.3-70b-versatile": {
+      "n_legit": 181,
+      "k_refused": 0,
+      "fpr": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.0208
+    }
+  },
+  "sonnet_baseline_test": {
+    "p_value": 4.378024989292691e-153,
+    "p0": 0.0005,
+    "k": 61,
+    "n": 181
+  },
+  "mcnemar_pairs": [
+    {
+      "p_value": 8.673617379884035e-19,
+      "note": "",
+      "model1": "claude-haiku-4-5-20251001",
+      "model2": "claude-sonnet-4-6",
+      "q_value": 2.6020852139652106e-18,
+      "significant_bh": true
+    },
+    {
+      "p_value": 8.673617379884035e-19,
+      "note": "",
+      "model1": "claude-sonnet-4-6",
+      "model2": "deepseek-chat",
+      "q_value": 2.6020852139652106e-18,
+      "significant_bh": true
+    },
+    {
+      "p_value": 8.673617379884035e-19,
+      "note": "",
+      "model1": "claude-sonnet-4-6",
+      "model2": "gemini-2.5-flash",
+      "q_value": 2.6020852139652106e-18,
+      "significant_bh": true
+    },
+    {
+      "p_value": 8.673617379884035e-19,
+      "note": "",
+      "model1": "claude-sonnet-4-6",
+      "model2": "gpt-4o-mini",
+      "q_value": 2.6020852139652106e-18,
+      "significant_bh": true
+    },
+    {
+      "p_value": 8.673617379884035e-19,
+      "note": "",
+      "model1": "claude-sonnet-4-6",
+      "model2": "llama-3.3-70b-versatile",
+      "q_value": 2.6020852139652106e-18,
+      "significant_bh": true
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "claude-haiku-4-5-20251001",
+      "model2": "deepseek-chat",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "claude-haiku-4-5-20251001",
+      "model2": "gemini-2.5-flash",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "claude-haiku-4-5-20251001",
+      "model2": "gpt-4o-mini",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "claude-haiku-4-5-20251001",
+      "model2": "llama-3.3-70b-versatile",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "deepseek-chat",
+      "model2": "gemini-2.5-flash",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "deepseek-chat",
+      "model2": "gpt-4o-mini",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "deepseek-chat",
+      "model2": "llama-3.3-70b-versatile",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "gemini-2.5-flash",
+      "model2": "gpt-4o-mini",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "gemini-2.5-flash",
+      "model2": "llama-3.3-70b-versatile",
+      "q_value": 1.0,
+      "significant_bh": false
+    },
+    {
+      "p_value": 1.0,
+      "note": "no_discordance",
+      "model1": "gpt-4o-mini",
+      "model2": "llama-3.3-70b-versatile",
+      "q_value": 1.0,
+      "significant_bh": false
+    }
+  ]
+}
