@@ -137,22 +137,24 @@ def load_existing_labels() -> dict[str, dict]:
 # LLM judge call
 # ---------------------------------------------------------------------------
 
-def judge_query(query_text: str, client: openai.OpenAI) -> dict:
+def judge_query(query_text: str, client: openai.OpenAI, judge_model: str = JUDGE_MODEL) -> dict:
     prompt = JUDGE_PROMPT_TEMPLATE.format(
         tier_defs=TIER_DEFINITIONS,
         legit_defs=LEGITIMACY_DEFINITIONS,
         query=query_text,
     )
     resp = client.chat.completions.create(
-        model=JUDGE_MODEL,
-        max_tokens=120,
+        model=judge_model,
+        max_tokens=2000,  # gemini-2.5-flash needs room for thinking tokens
         temperature=0,
-        response_format={"type": "json_object"},
         messages=[{"role": "user", "content": prompt}],
     )
     raw = resp.choices[0].message.content or "{}"
+    # Extract JSON from prose/markdown if needed
+    json_match = re.search(r'\{[^{}]*"tier"[^{}]*\}', raw, re.DOTALL)
+    raw_json = json_match.group() if json_match else raw
     try:
-        parsed = json.loads(raw)
+        parsed = json.loads(raw_json)
         tier = int(parsed.get("tier", 0))
         legitimacy = parsed.get("legitimacy", "").strip().lower()
         if tier not in (1, 2, 3, 4, 5):
@@ -184,7 +186,7 @@ def run_judge(queries: list[dict], judge_model: str = JUDGE_MODEL) -> list[dict]
     existing = load_existing_labels()
     remaining = [q for q in queries if q["query_id"] not in existing]
 
-    print(f"Judge: {JUDGE_MODEL} | Queries: {len(remaining)} remaining "
+    print(f"Judge: {judge_model} | Queries: {len(remaining)} remaining "
           f"({len(existing)} already done)", flush=True)
 
     RESULTS_DIR.mkdir(exist_ok=True)
@@ -196,7 +198,7 @@ def run_judge(queries: list[dict], judge_model: str = JUDGE_MODEL) -> list[dict]
             qid = q["query_id"]
             print(f"  [{i}/{len(remaining)}] {qid} ... ", end="", flush=True)
             try:
-                label = judge_query(q["query"], client)
+                label = judge_query(q["query"], client, judge_model=judge_model)
                 record = {
                     "query_id": qid,
                     "a1_tier": q.get("annotator_1_tier", q["tier"]),
@@ -330,7 +332,7 @@ def write_report(labels: list[dict], iaa: dict, out_path: Path):
         f"_Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}_",
         "",
         "**Annotator 1**: Human domain expert (primary annotator)  ",
-        f"**Annotator 2**: LLM judge ({JUDGE_MODEL}, T=0, JSON mode)  ",
+        f"**Annotator 2**: LLM judge ({labels[0].get('judge_model', JUDGE_MODEL)}, T=0)  ",
         f"**N**: {iaa['n_valid']}/{iaa['n_total']} valid label pairs",
         "",
         "_Note: Human Annotator 2 recruitment is ongoing. This LLM-based IAA serves as a_",
