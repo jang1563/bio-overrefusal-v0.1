@@ -190,13 +190,15 @@ See `scripts/run_claude_eval.py` and `scripts/analyze_results.py`.
 | gpt-4o-mini | 181 | 0.0% | 0.5% | [0.0%, 2.1%] | Full run |
 | llama-3.3-70b-versatile | 181 | 0.0% | 0.0% | [0.0%, 2.1%] | Full run |
 | claude-haiku-4-5-20251001 | 181 | 0.0% | 0.0% | [0.0%, 2.1%] | Full run |
+| **claude-sonnet-4-5-20250929** | **181** | **33.7%** | **33.7%** | **[27.2%, 40.9%]** | Full run |
 | **claude-sonnet-4-6** | **181** | **33.7%** | **33.7%** | **[27.2%, 40.9%]** | Full run |
+| **claude-opus-4-7** | **181** | **43.6%** | **43.6%** | **[36.6%, 50.9%]** | Full run |
 | gpt-4o | 40 | 0.0% | 0.0% | [0.0%, 8.8%] | Tier 4+5 only (60 queries) |
 
-All 61 Sonnet 4.6 refusals are hard API-level stops (`stop_reason="refusal"`, empty response).  
-Tier 3 FPR: 82.9% (34/41) [68.7%, 91.5%]. Tier 4 FPR: 65.0% (26/40) [49.5%, 77.9%].  
-Claude Haiku 4.5 (same provider, same query set): 0.0% FPR.  
-McNemar p < 0.0001 (Haiku vs Sonnet, BH FDR q < 0.0001). Exact binomial vs 0.05% baseline: p < 0.0001.  
+All Anthropic Sonnet/Opus refusals are hard API-level stops (`stop_reason="refusal"`, empty response).  
+Sonnet 4.6 Tier 3 FPR: 79.1% (34/43) [64.8%, 88.6%]. Tier 4 FPR: 65.0% (26/40) [49.5%, 77.9%].  
+FPR increases with model size within the Anthropic family: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%).  
+All non-Anthropic models: 0.0–0.5% FPR. McNemar p < 0.0001 (Haiku vs Sonnet). Exact binomial vs 0.05% baseline: p < 0.0001.  
 See `results/stats_report.md` for full statistical analysis.
 
 ## Ethical Considerations

@@ -54,7 +54,15 @@ PROVIDERS = {
         "sdk": "anthropic",
         "env": "ANTHROPIC_API_KEY",
     },
+    "claude-sonnet-4-5-20250929": {
+        "sdk": "anthropic",
+        "env": "ANTHROPIC_API_KEY",
+    },
     "claude-sonnet-4-6": {
+        "sdk": "anthropic",
+        "env": "ANTHROPIC_API_KEY",
+    },
+    "claude-opus-4-7": {
         "sdk": "anthropic",
         "env": "ANTHROPIC_API_KEY",
     },
@@ -94,7 +102,9 @@ PROVIDERS = {
 
 PRICING = {  # (input $/M tokens, output $/M tokens)
     "claude-haiku-4-5-20251001": (0.80, 4.00),
+    "claude-sonnet-4-5-20250929": (3.00, 15.00),
     "claude-sonnet-4-6": (3.00, 15.00),
+    "claude-opus-4-7": (15.00, 75.00),
     "gpt-4o": (2.50, 10.00),
     "gpt-4o-mini": (0.15, 0.60),
     "deepseek-chat": (0.07, 0.28),

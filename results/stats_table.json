@@ -7,6 +7,20 @@
       "wilson_lo": 0.0,
       "wilson_hi": 0.0208
     },
+    "claude-opus-4-7": {
+      "n_legit": 181,
+      "k_refused": 79,
+      "fpr": 0.4365,
+      "wilson_lo": 0.3663,
+      "wilson_hi": 0.5093
+    },
+    "claude-sonnet-4-5-20250929": {
+      "n_legit": 181,
+      "k_refused": 61,
+      "fpr": 0.337,
+      "wilson_lo": 0.2722,
+      "wilson_hi": 0.4086
+    },
     "claude-sonnet-4-6": {
       "n_legit": 181,
       "k_refused": 61,
