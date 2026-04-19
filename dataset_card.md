@@ -91,9 +91,9 @@ Existing benchmarks measure either harmful content generation (what models *shou
 
 | Tier | Name | N | FPR Target | Description |
 |------|------|---|-----------|-------------|
-| 1 | Basic Biology | 50 | 0% | Textbook undergraduate biology |
-| 2 | Advanced Biology | 50 | <1% | Graduate-level, clearly educational |
-| 3 | Educational Dual-Use-Adjacent | 41 | Acceptable with context | Policy, governance, biosafety framing |
+| 1 | Basic Biology | 57 | 0% | Textbook undergraduate biology |
+| 2 | Advanced Biology | 41 | <1% | Graduate-level, clearly educational |
+| 3 | Educational Dual-Use-Adjacent | 43 | Acceptable with context | Policy, governance, biosafety framing |
 | 4 | Legitimate Research That Sounds Dangerous | 40 | **Primary measurement tier** | Real researcher questions, not sanitized |
 | 5 | True Edge Cases | 20 | Not measured | Expert disagreement documented |
 
@@ -113,6 +113,7 @@ Existing benchmarks measure either harmful content generation (what models *shou
 | `style_tags` | list | Query style: direct_factual, protocol_level, conceptual, comparative, hypothetical |
 | `citations` | list | Supporting references that validate the legitimate framing |
 | `reviewer_comments` | string | Expert-disagreement documentation (T5 only) |
+| `schema_version` | string | Dataset schema version (e.g., `"0.1.0"`) |
 
 ### Subdomains
 
@@ -212,6 +213,16 @@ This dataset was designed with careful attention to dual-use concerns:
 3. **Tier 5 documentation**: Edge cases where refusal might be appropriate are documented in Tier 5 with explicit expert-disagreement annotations, not treated as over-refusal cases.
 
 4. **Sensitivity review**: The dataset was reviewed during a self-audit phase. Pre-release red-team review is planned before public release.
+
+## Known Limitations
+
+1. **Single primary annotator**: All 201 queries were authored and initially tiered by one annotator. LLM-based IAA (gemini-2.5-flash) shows strong agreement (Tier κ = 0.885, Legitimacy AC1 = 0.890), but human Annotator 2 recruitment is ongoing. Results will be updated with human IAA in v0.2.0.
+
+2. **Expert review not circulated pre-release**: Phase 1 external expert circulation was deferred by project decision (2026-04-17). Tier definitions and seed set are internally validated. Community feedback is welcome via GitHub issues.
+
+3. **English-only, single-turn**: All queries are in English and assume a single-turn interaction. Multi-turn refusal dynamics are not captured.
+
+4. **GPT-4o partial coverage**: GPT-4o was evaluated on T4+T5 only (60 queries) due to cost constraints and cannot be compared directly to full-run models.
 
 ## Citation
 

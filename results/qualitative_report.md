@@ -8,7 +8,8 @@ Model: claude-sonnet-4-6 | Refused: 61/181 legitimate queries
 
 ## B1. Top Keyword Bigrams: Refused vs Helped Queries
 
-Bigrams ordered by frequency in refused queries (then over-representation ratio).
+Bigrams ordered by frequency in refused queries (then over-representation ratio).  
+**Ratio** = (bigram_count_in_refused / total_refused_queries) ÷ (bigram_count_in_helped / total_helped_queries). Values >1 indicate over-representation in refused queries.
 
 | Bigram | Refused (count) | Helped (count) | Ratio |
 |--------|-----------------|----------------|-------|

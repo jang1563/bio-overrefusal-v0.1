@@ -4,20 +4,22 @@ An expert-annotated benchmark of **201 legitimate biology research queries** str
 
 ## Headline Finding
 
-| Model | FPR (strict) | Wilson 95% CI |
-|-------|-------------|---------------|
-| deepseek-chat | 0.0% | [0.0%, 2.1%] |
-| gemini-2.5-flash | 0.0% | [0.0%, 2.1%] |
-| gpt-4o-mini | 0.0% | [0.0%, 2.1%] |
-| llama-3.3-70b-versatile | 0.0% | [0.0%, 2.1%] |
-| claude-haiku-4-5-20251001 | 0.0% | [0.0%, 2.1%] |
-| **claude-sonnet-4-6** | **33.7%** | **[27.2%, 40.9%]** |
-| gpt-4o (T4+T5 only) | 0.0% | [0.0%, 8.8%] |
+| Model | N Legit | FPR (strict) | Wilson 95% CI | Notes |
+|-------|---------|-------------|---------------|-------|
+| deepseek-chat | 181 | 0.0% | [0.0%, 2.1%] | |
+| gemini-2.5-flash | 181 | 0.0% | [0.0%, 2.1%] | |
+| gpt-4o-mini | 181 | 0.0% | [0.0%, 2.1%] | |
+| llama-3.3-70b-versatile | 181 | 0.0% | [0.0%, 2.1%] | |
+| claude-haiku-4-5-20251001 | 181 | 0.0% | [0.0%, 2.1%] | |
+| **claude-sonnet-4-5-20250929** | **181** | **33.7%** | **[27.2%, 40.9%]** | |
+| **claude-sonnet-4-6** | **181** | **33.7%** | **[27.2%, 40.9%]** | |
+| **claude-opus-4-7** | **181** | **43.6%** | **[36.6%, 50.9%]** | Highest FPR |
+| gpt-4o | 40 | 0.0% | [0.0%, 8.8%] | T4+T5 only |
 
-**61 out of 181 legitimate queries refused** by Claude Sonnet 4.6 — all as hard API-level stops (`stop_reason="refusal"`, empty response). Claude Haiku 4.5 (same provider): 0.0% FPR.
+**FPR scales with model size within the Anthropic family**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%). All non-Anthropic models: 0.0–0.5%. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`, empty response).
 
 Exact binomial test vs Anthropic's published 0.05% baseline: **p < 0.0001**.  
-McNemar (Haiku vs Sonnet, 181 paired queries): **p < 0.0001** (BH q < 0.0001).
+McNemar (Haiku vs Sonnet 4.6, 181 paired queries): **p < 0.0001** (BH q < 0.0001).
 
 ## Dataset Structure
 
@@ -25,9 +27,9 @@ McNemar (Haiku vs Sonnet, 181 paired queries): **p < 0.0001** (BH q < 0.0001).
 
 | Tier | Name | N | FPR Target |
 |------|------|---|-----------|
-| 1 | Basic Biology | 50 | 0% |
-| 2 | Advanced Biology | 50 | <1% |
-| 3 | Educational Dual-Use-Adjacent | 41 | Policy/governance framing |
+| 1 | Basic Biology | 57 | 0% |
+| 2 | Advanced Biology | 41 | <1% |
+| 3 | Educational Dual-Use-Adjacent | 43 | Policy/governance framing |
 | 4 | Legitimate Research That Sounds Dangerous | 40 | **Primary measurement tier** |
 | 5 | True Edge Cases | 20 | Not measured (expert disagreement) |
 
@@ -35,9 +37,9 @@ McNemar (Haiku vs Sonnet, 181 paired queries): **p < 0.0001** (BH q < 0.0001).
 
 | Tier | Refused | Total | FPR | Wilson 95% CI |
 |------|---------|-------|-----|---------------|
-| T1 | 0 | 50 | 0.0% | [0.0%, 7.1%] |
-| T2 | 1 | 50 | 2.0% | [0.4%, 10.5%] |
-| T3 | 34 | 41 | 82.9% | [68.7%, 91.5%] |
+| T1 | 0 | 57 | 0.0% | [0.0%, 6.3%] |
+| T2 | 1 | 41 | 2.4% | [0.4%, 12.6%] |
+| T3 | 34 | 43 | 79.1% | [64.8%, 88.6%] |
 | T4 | 26 | 40 | 65.0% | [49.5%, 77.9%] |
 
 ### Subdomains (10)
@@ -48,7 +50,7 @@ McNemar (Haiku vs Sonnet, 181 paired queries): **p < 0.0001** (BH q < 0.0001).
 ## Quick Start
 
 ```bash
-git clone <repo-url> && cd OverRefusal
+git clone https://github.com/jang1563/bio-overrefusal-v0.1.git && cd bio-overrefusal-v0.1
 
 # Install dependencies
 pip install anthropic openai statsmodels scipy numpy pandas scikit-learn irrCAC
@@ -102,11 +104,11 @@ dataset_card.md          — HuggingFace dataset card
 
 ## Key Findings
 
-1. **Sonnet 4.6 FPR = 33.7%** vs 0.0% for all 5 other full-run models including Claude Haiku 4.5
-2. **All 61 refusals are API-level**: `stop_reason="refusal"` with empty `content[]` — not safety hedging
-3. **T3 most affected (82.9%)**: Regulatory/policy topics (BSL-3 specs, DURC framework, CWC scheduling) blocked despite being publicly available government policy
+1. **FPR scales with model size**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%) — all non-Anthropic models ≤0.5%
+2. **All Anthropic refusals are API-level**: `stop_reason="refusal"` with empty `content[]` — not safety hedging
+3. **T3 most affected (79.1%)**: Regulatory/policy topics (BSL-3 specs, DURC framework, CWC scheduling) blocked despite being publicly available government policy
 4. **T4 also severely affected (65.0%)**: Primary mechanistic research questions refused
-5. **Intra-family gap**: Haiku 4.5 (0%) vs Sonnet 4.6 (33.7%) — same provider, same queries
+5. **Intra-family gap**: Haiku 4.5 (0%) vs Sonnet 4.6 (33.7%) vs Opus 4.7 (43.6%) — same queries
 6. **T2 anomaly**: One methodology question about bat coronavirus assays refused by keyword matching
 7. **Hypothetical framing = highest FPR** (59.1%): "suppose a researcher..." triggers more refusals
 
@@ -128,7 +130,10 @@ dataset_card.md          — HuggingFace dataset card
 | gpt-4o-mini | ~$0.13 | OpenAI |
 | llama-3.3-70b-versatile | ~$0.18 | Groq |
 | claude-haiku-4-5-20251001 | ~$0.84 | Anthropic |
+| claude-sonnet-4-5-20250929 | ~$3.17 | Anthropic |
 | claude-sonnet-4-6 | ~$3.17 | Anthropic |
+| claude-opus-4-7 | ~$15.82 | Anthropic |
+| gpt-4o | ~$0.63 (T4+T5 only) | OpenAI |
 
 ## Related Work
 
