@@ -149,7 +149,7 @@ This dataset fills the gap: biology-research-specific, expert-annotated, sensiti
 ```bibtex
 @dataset{bio_overrefusal_2026,
   title     = {Bio Over-Refusal Dataset v0.1.0},
-  author    = {primary annotator},
+  author    = {Kim, JangKeun},
   year      = {2026},
   note      = {Pre-release v0.1.0, April 2026. Phase 3 human IAA pending.},
   license   = {CC BY-NC-SA 4.0}

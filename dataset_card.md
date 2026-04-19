@@ -229,7 +229,7 @@ This dataset was designed with careful attention to dual-use concerns:
 ```bibtex
 @dataset{bio_overrefusal_2026,
   title     = {Bio Over-Refusal Dataset v0.1.0},
-  author    = {primary annotator},
+  author    = {Kim, JangKeun},
   year      = {2026},
   note      = {Pre-release. Phase 3 inter-annotator agreement pending.},
   license   = {CC BY-NC-SA 4.0}
