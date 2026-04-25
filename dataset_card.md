@@ -18,19 +18,23 @@ tags:
 size_categories:
   - n<1K
 pretty_name: Bio Over-Refusal Dataset v0.1.0
+annotations_creators:
+  - expert-generated
+source_datasets:
+  - original
 dataset_info:
   features:
     - name: query_id
+      dtype: string
+    - name: query
       dtype: string
     - name: tier
       dtype: int64
     - name: subdomain_primary
       dtype: string
     - name: subdomain_secondary
-      dtype: string
+      sequence: string
     - name: legitimacy
-      dtype: string
-    - name: query
       dtype: string
     - name: biological_reasoning
       dtype: string
@@ -46,6 +50,10 @@ dataset_info:
           dtype: string
     - name: danger_shift_contexts
       sequence:
+        - name: role
+          dtype: string
+        - name: setting
+          dtype: string
         - name: description
           dtype: string
         - name: durc_category
@@ -60,11 +68,21 @@ dataset_info:
           dtype: string
         - name: url
           dtype: string
-    - name: annotator
+    - name: annotator_1_tier
+      dtype: int64
+    - name: annotator_1_legitimacy
       dtype: string
-    - name: annotation_date
+    - name: annotator_2_tier
+      dtype: int64
+    - name: annotator_2_legitimacy
+      dtype: string
+    - name: adjudicated_tier
+      dtype: int64
+    - name: adjudicated_legitimacy
       dtype: string
     - name: reviewer_comments
+      dtype: string
+    - name: schema_version
       dtype: string
   splits:
     - name: train
@@ -77,7 +95,7 @@ dataset_info:
 
 The **Bio Over-Refusal Dataset** is an expert-annotated benchmark of 201 legitimate biology research queries stratified by sensitivity tier. It is designed to measure the **false-positive refusal rate (FPR)** of large language models — specifically, the rate at which models refuse or hedge on questions that credentialed biology researchers would consider appropriate to answer.
 
-The dataset does **not** contain harmful content or synthesis instructions. Every included query is either demonstrably legitimate (Tiers 1–4) or annotated as a genuine expert-disagreement case (Tier 5). The dataset is intended for AI safety evaluation, not for adversarial prompt engineering.
+The dataset does **not** contain wet-lab protocols, synthesis instructions, weaponization parameters, dosing guidance, evasion guidance, or optimization requests for harmful biological agents or toxins. Every included query is either demonstrably legitimate (Tiers 1–4) or annotated as a genuine expert-disagreement case (Tier 5). The dataset is intended for AI safety evaluation, not for adversarial prompt engineering.
 
 ## Motivation
 
@@ -112,6 +130,12 @@ Existing benchmarks measure either harmful content generation (what models *shou
 | `danger_shift_contexts` | list | How the same topic could be misused (T3–T5) |
 | `style_tags` | list | Query style: direct_factual, protocol_level, conceptual, comparative, hypothetical |
 | `citations` | list | Supporting references that validate the legitimate framing |
+| `annotator_1_tier` | int | Initial annotator tier after v0.1.0 cleanup |
+| `annotator_1_legitimacy` | string | Initial annotator legitimacy label |
+| `annotator_2_tier` | int or null | Reserved for blinded second annotator in Phase 3 |
+| `annotator_2_legitimacy` | string or null | Reserved for blinded second annotator in Phase 3 |
+| `adjudicated_tier` | int or null | Reserved for post-disagreement adjudication |
+| `adjudicated_legitimacy` | string or null | Reserved for post-disagreement adjudication |
 | `reviewer_comments` | string | Expert-disagreement documentation (T5 only) |
 | `schema_version` | string | Dataset schema version (e.g., `"0.1.0"`) |
 
@@ -120,6 +144,27 @@ Existing benchmarks measure either harmful content generation (what models *shou
 `virology`, `toxicology`, `synthetic_biology`, `genomics`, `pathogen_biology`, `immunology`, `biochemistry`, `cell_biology`, `microbiology`, `structural_biology`
 
 Each subdomain has ≥15 entries. Pathogen biology and virology are most represented (25 each) reflecting their prevalence in safety-classifier triggers.
+
+## Loading
+
+From a local clone:
+
+```python
+from datasets import load_dataset
+from schema.features import make_features
+
+ds = load_dataset(
+    "json",
+    data_files={"train": "data/queries.jsonl"},
+    features=make_features(),
+)["train"]
+```
+
+When this card is published on Hugging Face, use `dataset_card.md` as the
+dataset repository `README.md` and upload `data/queries.jsonl` as the `train`
+split. The explicit feature schema in `schema/features.py` is recommended
+because nullable adjudication fields can otherwise drift under automatic type
+inference.
 
 ## Data Collection & Annotation
 
@@ -136,7 +181,7 @@ Each subdomain has ≥15 entries. Pathogen biology and virology are most represe
 
 **Phase 3 (Inter-annotator agreement):** Planned. Second annotator recruitment in progress; Cohen's kappa target > 0.7 on legitimacy labels, focusing on Tier 4 and 5.
 
-**Note on Tier 5:** Two T5 entries (`t5_toxicology_0002`, `t5_immunology_0002`) are arguably Tier 2/3 and were included specifically to document known classifier over-triggering patterns. See `reviewer_notes.md`.
+**Note on Tier 5:** Tier 5 entries are excluded from FPR measurement and are included to document expert-disagreement boundaries. Reviewer notes are represented in the public `reviewer_comments` field when they are safe to disclose.
 
 ## Uses
 

@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased
+
+### Public release readiness
+- Added project packaging metadata (`pyproject.toml`) and GitHub Actions CI.
+- Added full-dataset release invariant tests, dataset-card metadata checks, and
+  fixed the pytest collection bug in `tests/test_loader.py`.
+- Normalized `data/queries.jsonl` to the public schema for all 201 rows.
+- Added `CONTRIBUTING.md`, `CITATION.cff`, and a GitHub/Hugging Face public
+  release checklist.
+- Added GitHub issue/PR templates and `SAFETY.md` for public contribution and
+  responsible-use workflows.
+- Added `schema/features.py` as the canonical Hugging Face `Features`
+  declaration and a tested HF release-bundle builder.
+- Expanded CI to Python 3.10, 3.11, and 3.12 and pinned the supported Python
+  range to avoid unsupported Python 3.13 dependency builds.
+- Added Ruff linting to the public CI gate and cleaned existing lint findings.
+- Hardened `scripts/run_claude_eval.py` against API-level refusal responses
+  with empty content.
+
 ## v0.1.0 — April 2026
 
 ### Dataset

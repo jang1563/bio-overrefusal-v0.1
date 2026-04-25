@@ -1,6 +1,27 @@
 # Bio Over-Refusal Dataset v0.1.0
 
-An expert-annotated benchmark of **201 legitimate biology research queries** stratified by sensitivity tier, designed to measure **false-positive refusal rates (FPR)** of large language models.
+[![CI](https://github.com/jang1563/bio-overrefusal-v0.1/actions/workflows/ci.yml/badge.svg)](https://github.com/jang1563/bio-overrefusal-v0.1/actions/workflows/ci.yml)
+[![Python 3.10–3.12](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](pyproject.toml)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey)](LICENSE)
+[![Hugging Face Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
+
+> **TL;DR.** 201 expert-annotated biology research queries, tier-stratified by sensitivity, used to measure **false-positive refusal rates (FPR)** in frontier LLMs. **Anthropic Claude Opus 4.7 refuses 43.6%** of legitimate biology research queries; Sonnet 4.5/4.6 refuse 33.7%; Haiku 4.5 and all non-Anthropic models tested refuse ≤0.5%. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`).
+
+This repository contains the dataset, schema, evaluation scripts, statistical analysis, and release documentation needed to reproduce the v0.1.0 results. It is intended for AI safety evaluation and safety-calibration research, **not** for harmful-content elicitation.
+
+- **Dataset (Hugging Face):** [jang1563/bio-overrefusal-v0.1](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
+- **Dataset card:** [`dataset_card.md`](dataset_card.md)
+- **Statistical report:** [`results/stats_report.md`](results/stats_report.md)
+- **Responsible-use scope:** [`SAFETY.md`](SAFETY.md)
+
+## Release Status
+
+| Surface | Status |
+|---------|--------|
+| Dataset | v0.1.0 — 201 annotated queries, schema-validated in CI |
+| GitHub | Public, CI green on Python 3.10 / 3.11 / 3.12 |
+| Hugging Face | Public dataset repo, CC BY-NC-SA 4.0, viewer enabled |
+| Human IAA | Pending for v0.2.0 (LLM-based validation reported in `results/iaa_report.md`) |
 
 ## Headline Finding
 
@@ -49,16 +70,20 @@ McNemar (Haiku vs Sonnet 4.6, 181 paired queries): **p < 0.0001** (BH q < 0.0001
 
 ## Quick Start
 
+Requires Python 3.10, 3.11, or 3.12. The CI matrix validates all three versions.
+
 ```bash
 git clone https://github.com/jang1563/bio-overrefusal-v0.1.git && cd bio-overrefusal-v0.1
 
-# Install dependencies
-pip install anthropic openai statsmodels scipy numpy pandas scikit-learn irrCAC
+# Install runtime + development dependencies
+python -m pip install -e ".[dev]"
 
-# Load API keys (expected format: export KEY="value")
-source ~/.api_keys
+# Validate the dataset schema and loader
+python -m pytest -q
+python -m ruff check .
 
-# Evaluate a model
+# Evaluate a model (requires the relevant provider API key)
+export ANTHROPIC_API_KEY="..."
 python scripts/run_multi_eval.py --model claude-sonnet-4-6
 python scripts/run_multi_eval.py --model deepseek-chat
 python scripts/run_multi_eval.py --list-models   # see all supported models + cost estimates
@@ -77,14 +102,21 @@ python scripts/classify_with_llm.py results/raw_claude-sonnet-4-6.jsonl
 
 # IAA analysis (requires OPENAI_API_KEY)
 python scripts/compute_iaa.py
+
+# Prepare a Hugging Face dataset-repo bundle for review/upload
+python scripts/prepare_hf_release.py --force --repo-id <hf-user-or-org>/bio-overrefusal
 ```
+
+Raw model outputs are intentionally ignored by git (`results/raw_*.jsonl`) because they can be large and provider-specific. The repository tracks reproducible summary tables and reports.
 
 ## Repository Structure
 
 ```
+.github/workflows/ci.yml — CI validation for loader + dataset invariants
 data/
   queries.jsonl          — 201 annotated queries (the dataset)
 schema/                  — JSON schema for queries.jsonl
+  features.py            — Canonical Hugging Face `Features` declaration
 scripts/
   run_claude_eval.py     — Anthropic-SDK evaluator
   run_multi_eval.py      — Multi-provider evaluator
@@ -93,13 +125,18 @@ scripts/
   compute_stats.py       — Pre-registered statistical analysis
   analyze_refusals.py    — Qualitative refusal analysis
   compute_iaa.py         — IAA computation (LLM-as-Annotator-2)
+  prepare_hf_release.py  — Local Hugging Face dataset-repo bundle builder
 results/                 — Generated outputs (raw_*.jsonl excluded from git)
   fpr_report.md          — Multi-model FPR comparison
   stats_report.md        — Wilson CIs, McNemar, BH FDR
   qualitative_report.md  — Keyword analysis, refusal clusters
   iaa_report.md          — LLM-based label validation (human IAA pending)
+docs/
+  public_release_checklist.md — GitHub + Hugging Face release checklist
+  huggingface_release.md      — HF bundle/upload workflow
 tier_definitions.md      — Pre-registered tier criteria
 dataset_card.md          — HuggingFace dataset card
+CONTRIBUTING.md          — Contribution and dual-use safety guidelines
 ```
 
 ## Key Findings
@@ -143,6 +180,20 @@ dataset_card.md          — HuggingFace dataset card
 - **Health-ORSC-Bench** (31K, 2024): Health-general, not biology-research-specific
 
 This dataset fills the gap: biology-research-specific, expert-annotated, sensitivity-stratified, with hard API-level refusal detection.
+
+## Responsible Use
+
+This benchmark is scoped to false-positive refusal measurement on legitimate research questions. It should not be used for jailbreaks, prompt injection, or attempts to elicit operational biological harm. New dataset contributions must include public citations and must not request synthesis, production, weaponization, evasion, dosing, optimization, or deployment of harmful biological agents or toxins.
+
+See [`SAFETY.md`](SAFETY.md) for the public responsible-use scope and reporting guidance.
+
+## Reproducibility Notes
+
+- `python -m pytest -q` validates schema fields, controlled vocabularies, row counts, tier counts, query ID conventions, and Hugging Face loader compatibility.
+- `python -m ruff check .` validates Python source hygiene for the public release.
+- `schema/jsonl_schema.md` is the canonical data contract.
+- `dataset_card.md` is the Hugging Face-facing card; `scripts/prepare_hf_release.py` copies it as `README.md` in the HF dataset bundle.
+- `docs/public_release_checklist.md` lists the GitHub and Hugging Face publication steps.
 
 ## Citation
 

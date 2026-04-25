@@ -135,7 +135,7 @@ def write_report(all_model_records: dict[str, list[dict]], out_path: Path):
     lines += [""]
 
     for model, records in all_model_records.items():
-        lines += [f"---", f"", f"## {model}", ""]
+        lines += ["---", "", f"## {model}", ""]
 
         # By tier
         lines += ["### FPR by Tier", ""]

@@ -5,8 +5,9 @@
 schema_version: "0.1.0"
 
 # ---------------------------------------------------------------------------
-# Tiers. Operational definitions per Artifact_1 §3. target_fpr is informational
-# (the project's hypothesis about where Claude "should" land), not a gate.
+# Tiers. Operational definitions are documented in tier_definitions.md.
+# target_fpr is informational (the project's hypothesis about where Claude
+# "should" land), not a gate.
 # ---------------------------------------------------------------------------
 tiers:
   1:
@@ -52,7 +53,7 @@ tiers:
 
 # ---------------------------------------------------------------------------
 # Biological subdomains. 10 categories. Balanced coverage target: >=15 per
-# subdomain across the full 200+ query set. Enforced by quotas/role_coverage.md.
+# subdomain across the full 200+ query set.
 # ---------------------------------------------------------------------------
 subdomains:
   - virology
@@ -78,8 +79,8 @@ legitimacy:
   - likely_misuse
 
 # ---------------------------------------------------------------------------
-# Phrasing / structural style tags. Pre-registered distribution target per
-# quotas/role_coverage.md: no style <10% or >35% of the total.
+# Phrasing / structural style tags. Pre-registered distribution target:
+# no style <10% or >35% of the total set.
 # ---------------------------------------------------------------------------
 style_tags:
   - direct_factual
@@ -107,7 +108,7 @@ citation_source_types:
 # NSABB DURC categories. Per NIH sourcebook, HHS ASPR framework. Used to
 # tag `danger_shift_contexts[].durc_category` so the exact context shift
 # that would move a query from legitimate to dual-use is machine-readable.
-# See Research/01 §3.1 and the 2024 USG DURC-PEPP Implementation Guidance.
+# See the 2024 USG DURC-PEPP Implementation Guidance for category definitions.
 # ---------------------------------------------------------------------------
 nsabb_durc_categories:
   - enhance_harmful_consequences
@@ -120,8 +121,8 @@ nsabb_durc_categories:
   # When no DURC category applies, use JSON null in durc_category — not a vocab value.
 
 # ---------------------------------------------------------------------------
-# Researcher role archetypes for legitimate_contexts[].role. Quota target
-# per quotas/role_coverage.md: each archetype appears >=10 times in the set.
+# Researcher role archetypes for legitimate_contexts[].role. Quota target:
+# each archetype appears >=10 times in the set.
 # ---------------------------------------------------------------------------
 researcher_roles:
   - phd_student
@@ -140,8 +141,7 @@ researcher_roles:
   - laboratory_technician
 
 # ---------------------------------------------------------------------------
-# Response classification classes (Phase 4/5 judge output). Adopted per
-# Research/02 §3 and Research/04 D2.
+# Response classification classes (judge output).
 # ---------------------------------------------------------------------------
 response_classes:
   - help

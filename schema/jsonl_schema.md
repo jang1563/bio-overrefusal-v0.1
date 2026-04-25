@@ -1,6 +1,6 @@
 # JSONL Schema — Bio Over-Refusal Dataset v0.1.0
 
-Canonical record shape for `data/queries.jsonl`. Loaded into HuggingFace Datasets via the explicit `Features` declaration in [`tests/test_loader.py`](../tests/test_loader.py). Controlled vocabularies live in [`vocab.yaml`](vocab.yaml) — enum membership is enforced at load time by the loader smoke test.
+Canonical record shape for `data/queries.jsonl`. Loaded into HuggingFace Datasets via the explicit `Features` declaration in [`schema/features.py`](features.py). Controlled vocabularies live in [`vocab.yaml`](vocab.yaml) — enum membership is enforced at load time by the loader smoke test.
 
 ---
 
@@ -8,7 +8,7 @@ Canonical record shape for `data/queries.jsonl`. Loaded into HuggingFace Dataset
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `query_id` | string | yes | Stable identifier. Convention: `t{tier}_{subdomain}_{NNNN}` where `subdomain` is the full `subdomain_primary` value (e.g. `t1_virology_0042`, `t3_cell_biology_0007`). |
+| `query_id` | string | yes | Stable identifier. Convention: `t{source_tier}_{subdomain}_{NNNN}` where `subdomain` is the full `subdomain_primary` value (e.g. `t1_virology_0042`, `t3_cell_biology_0007`). The prefix is stable lineage metadata and may preserve the original authoring tier after re-tiering; the current adjudicated tier is always the `tier` field. |
 | `query` | string | yes | The natural-language query a researcher would send to Claude. Single sentence or short paragraph. |
 | `tier` | int32 (1–5) | yes | Final (adjudicated) tier. Starts equal to `annotator_1_tier`; overwritten by Phase 3 adjudication. |
 | `subdomain_primary` | string enum | yes | Dominant subdomain (`vocab.yaml::subdomains`). Used for stratified analysis. |
@@ -71,7 +71,7 @@ The canonical loader pattern is:
 
 ```python
 from datasets import load_dataset
-from tests.test_loader import make_features
+from schema.features import make_features
 
 ds = load_dataset(
     "json",
@@ -80,7 +80,7 @@ ds = load_dataset(
 )
 ```
 
-Explicit `features=` bypasses HF's type inference, which otherwise drifts on nullable fields and heterogeneous list-of-dict structures (see Research/02 §1.1). The smoke test in [`tests/test_loader.py`](../tests/test_loader.py) asserts the fixture loads against `make_features()`.
+Explicit `features=` bypasses HF's type inference, which otherwise drifts on nullable fields and heterogeneous list-of-dict structures. The smoke test in [`tests/test_loader.py`](../tests/test_loader.py) asserts the fixture loads against `make_features()`.
 
 ---
 
@@ -101,4 +101,4 @@ These live in `data/claude_responses.jsonl`, **not** in `queries.jsonl`. Keyed b
 | `classification` | string enum | `vocab.yaml::response_classes`. Filled by the judge pass. |
 | `judge_model` / `judge_rubric_hash` | string | Judge provenance. |
 
-See `Research/03 §5.1` for the full response-row spec and provenance tie-ins.
+See `scripts/run_multi_eval.py` for how response rows are written and how provenance fields are populated.

@@ -2,6 +2,9 @@ results/raw_*.jsonl
 results/llm_classified_*.jsonl
 results/summary_*.json
 results/iaa_llm_labels.jsonl
+.coverage
+htmlcov/
+build/
 data/seeds_*.jsonl
 data/expansion_*.jsonl
 data/archive/
@@ -15,4 +18,9 @@ quotas/
 reviewer_notes.md
 __pycache__/
 *.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
+uv.lock
 .DS_Store
+.claude/

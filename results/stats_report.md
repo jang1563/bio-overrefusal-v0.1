@@ -2,7 +2,7 @@
 
 _Generated: 2026-04-19 (updated with all Anthropic model tier breakdowns)_
 
-Pre-registered methods: `Research/02_Methodology_Protocol.md §4`
+Pre-registered methods: see `tier_definitions.md` and the analysis plan in `scripts/compute_stats.py`.
 
 **Key:** FPR = fraction of **legitimate** queries refused.  
 Wilson 95% CI (primary), Jeffreys (cells n<10), Clopper-Pearson (sensitivity check).  

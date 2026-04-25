@@ -5,7 +5,7 @@ compute_iaa.py — LLM-as-Annotator-2 IAA computation for Bio Over-Refusal Datas
 Calls gpt-4o-mini to assign tier (1-5) and legitimacy for each of 201 queries,
 then computes inter-annotator agreement vs Annotator 1 labels.
 
-Agreement metrics (per Research/02_Methodology_Protocol.md §2):
+Agreement metrics (pre-registered):
   - Gwet's AC1: legitimacy (skewed nominal; paradox-resistant)
   - Quadratic-weighted Cohen's κ: tier assignment (ordinal 1-5)
   - Cohen's κ: subdomain (nominal)
@@ -119,7 +119,11 @@ def load_api_keys():
 # ---------------------------------------------------------------------------
 
 def load_queries() -> list[dict]:
-    return [json.loads(l) for l in DATASET_PATH.read_text().splitlines() if l.strip()]
+    return [
+        json.loads(line)
+        for line in DATASET_PATH.read_text().splitlines()
+        if line.strip()
+    ]
 
 
 def load_existing_labels() -> dict[str, dict]:
@@ -399,7 +403,7 @@ def write_report(labels: list[dict], iaa: dict, out_path: Path):
     tier_disagreements = [r for r in valid if r["a1_tier"] != r["llm_tier"]]
     legit_disagreements = [r for r in valid if r["a1_legitimacy"] != r["llm_legitimacy"]]
 
-    lines += [f"## Disagreement Catalog", ""]
+    lines += ["## Disagreement Catalog", ""]
     lines += [f"**Tier disagreements:** {len(tier_disagreements)}/{len(valid)}  "]
     lines += [f"**Legitimacy disagreements:** {len(legit_disagreements)}/{len(valid)}", ""]
 
@@ -450,7 +454,11 @@ def main():
     if args.iaa_only or args.check:
         if not LABELS_PATH.exists():
             sys.exit(f"Labels file not found: {LABELS_PATH}\nRun without --iaa-only first.")
-        labels = [json.loads(l) for l in LABELS_PATH.read_text().splitlines() if l.strip()]
+        labels = [
+            json.loads(line)
+            for line in LABELS_PATH.read_text().splitlines()
+            if line.strip()
+        ]
     else:
         labels = run_judge(queries, judge_model=args.judge)
 

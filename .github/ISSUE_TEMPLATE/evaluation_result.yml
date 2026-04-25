@@ -1,0 +1,40 @@
+name: Evaluation result
+description: Share an independently reproduced model evaluation.
+title: "[Evaluation]: "
+labels: ["evaluation", "reproduction"]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Model and provider
+      placeholder: "provider/model-version"
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Evaluation date
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Protocol
+      description: Include prompt, temperature, max tokens, tiers evaluated, and classifier method.
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Results summary
+      description: Include N legitimate, refusals, FPR, confidence interval, and any known deviations from the repository protocol.
+    validations:
+      required: true
+  - type: checkboxes
+    id: artifact_check
+    attributes:
+      label: Artifact check
+      options:
+        - label: I did not include API keys, private reviewer notes, account metadata, or raw outputs that should remain private.
+          required: true

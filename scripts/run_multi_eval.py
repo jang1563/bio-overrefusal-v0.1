@@ -31,7 +31,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 from run_claude_eval import (
     classify_response,
     load_dataset,
-    DATASET_PATH,
     RESULTS_DIR,
     MAX_TOKENS,
     SYSTEM_PROMPT,

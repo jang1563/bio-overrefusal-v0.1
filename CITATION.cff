@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this dataset or evaluation code, please cite it as below."
+title: "Bio Over-Refusal Dataset v0.1.0"
+version: "0.1.0"
+date-released: "2026-04-19"
+authors:
+  - family-names: Kim
+    given-names: JangKeun
+license: "CC-BY-NC-SA-4.0"
+repository-code: "https://github.com/jang1563/bio-overrefusal-v0.1"
+abstract: "An expert-annotated benchmark for measuring false-positive refusal rates of large language models on legitimate biology research queries."
+keywords:
+  - ai-safety
+  - biosecurity
+  - biology
+  - llm-evaluation
+  - over-refusal

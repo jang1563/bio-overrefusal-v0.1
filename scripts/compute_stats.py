@@ -2,7 +2,7 @@
 """
 compute_stats.py — Pre-registered statistical analysis for Bio Over-Refusal Dataset
 
-Implements all methods from Research/02_Methodology_Protocol.md §4:
+Implements the pre-registered analysis plan:
   A1. Per-model FPR with Wilson / Jeffreys CIs
   A2. Exact binomial test: Sonnet vs Anthropic published baseline (p0=0.0005)
   A3. Pairwise McNemar tests (full-run models only) + BH FDR q=0.10
@@ -22,7 +22,6 @@ Usage:
 import argparse
 import json
 import numpy as np
-from collections import defaultdict
 from datetime import datetime, timezone
 from itertools import combinations
 from pathlib import Path
@@ -52,7 +51,11 @@ ANTHROPIC_BASELINE_P0 = 0.0005  # 0.05% from Next-gen CC blog
 # ---------------------------------------------------------------------------
 
 def load_results(path: Path) -> list[dict]:
-    return [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+    return [
+        json.loads(line)
+        for line in path.read_text().splitlines()
+        if line.strip()
+    ]
 
 
 def load_all_results() -> dict[str, list[dict]]:
@@ -312,7 +315,7 @@ def write_report(all_records: dict[str, list[dict]], out_path: Path):
         "",
         f"_Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}_",
         "",
-        "Pre-registered methods: `Research/02_Methodology_Protocol.md §4`",
+        "Pre-registered methods: see `tier_definitions.md` and the analysis plan in this script's docstring.",
         "",
         "**Key:** FPR = fraction of **legitimate** queries refused.  ",
         "Wilson 95% CI (primary), Jeffreys (cells n<10), Clopper-Pearson (sensitivity check).  ",
@@ -412,9 +415,12 @@ def write_report(all_records: dict[str, list[dict]], out_path: Path):
         lo, hi = bootstrap_ci(labels)
         return f"| {label} | {fmt_pct(est)} | {fmt_ci(lo, hi)} |"
 
-    lines.append(_bootstrap_row("Sonnet overall FPR (n=181)", build_refusal_labels(sonnet)))
-    lines.append(_bootstrap_row("Sonnet T3 FPR (n=41)", build_refusal_labels(sonnet, tier=3)))
-    lines.append(_bootstrap_row("Sonnet T4 FPR (n=40)", build_refusal_labels(sonnet, tier=4)))
+    sonnet_labels = build_refusal_labels(sonnet)
+    sonnet_t3_labels = build_refusal_labels(sonnet, tier=3)
+    sonnet_t4_labels = build_refusal_labels(sonnet, tier=4)
+    lines.append(_bootstrap_row(f"Sonnet overall FPR (n={len(sonnet_labels)})", sonnet_labels))
+    lines.append(_bootstrap_row(f"Sonnet T3 FPR (n={len(sonnet_t3_labels)})", sonnet_t3_labels))
+    lines.append(_bootstrap_row(f"Sonnet T4 FPR (n={len(sonnet_t4_labels)})", sonnet_t4_labels))
 
     if haiku:
         disc_lo, disc_hi = bootstrap_discordance(haiku, sonnet)

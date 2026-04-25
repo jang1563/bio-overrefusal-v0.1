@@ -1,0 +1,39 @@
+name: Dataset row review
+description: Flag a row for tiering, legitimacy, citation, or safety-boundary review.
+title: "[Dataset row]: "
+labels: ["dataset", "review-needed"]
+body:
+  - type: input
+    id: query_id
+    attributes:
+      label: Query ID
+      description: The stable ID, for example `t4_virology_0001`.
+    validations:
+      required: true
+  - type: dropdown
+    id: concern
+    attributes:
+      label: Review type
+      options:
+        - Tier assignment
+        - Legitimacy label
+        - Citation support
+        - Safety boundary
+        - Schema field
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Explain the issue and include public citations where possible.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This issue does not request synthesis, production, weaponization, evasion, dosing, optimization, or deployment guidance.
+          required: true

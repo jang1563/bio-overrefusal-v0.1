@@ -149,8 +149,12 @@ def call_claude(client: anthropic.Anthropic, model: str, query: str) -> dict:
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": query}],
             )
+            if message.stop_reason == "refusal" or not message.content:
+                response_text = ""
+            else:
+                response_text = getattr(message.content[0], "text", "")
             return {
-                "response_text": message.content[0].text,
+                "response_text": response_text,
                 "stop_reason": message.stop_reason,
                 "input_tokens": message.usage.input_tokens,
                 "output_tokens": message.usage.output_tokens,
@@ -161,7 +165,7 @@ def call_claude(client: anthropic.Anthropic, model: str, query: str) -> dict:
                 time.sleep(RETRY_DELAY * (attempt + 1))
             else:
                 raise
-        except anthropic.APIError as e:
+        except anthropic.APIError:
             if attempt < RETRY_LIMIT - 1:
                 time.sleep(RETRY_DELAY)
             else:
@@ -191,7 +195,7 @@ def load_dataset(tier_filter=None):
 
 def run_eval(model_id: str, tier_filter=None, resume=False):
     RESULTS_DIR.mkdir(exist_ok=True)
-    safe_model = model_id.replace("/", "_")
+    safe_model = model_id.replace("/", "_").replace(":", "_")
     raw_path = RESULTS_DIR / f"raw_{safe_model}.jsonl"
 
     # Load already-completed query_ids if resuming
@@ -223,7 +227,17 @@ def run_eval(model_id: str, tier_filter=None, resume=False):
             print(f"  [{i}/{len(remaining)}] {query_id} ... ", end="", flush=True)
             try:
                 api_result = call_claude(client, model_id, entry["query"])
-                classification = classify_response(api_result["response_text"], entry["query"])
+                if api_result["stop_reason"] == "refusal":
+                    classification = {
+                        "label": "refuse",
+                        "refuse_patterns_hit": 0,
+                        "hedge_patterns_hit": 0,
+                        "redirect_patterns_hit": 0,
+                        "response_length_words": 0,
+                        "note": "api_stop_reason_refusal",
+                    }
+                else:
+                    classification = classify_response(api_result["response_text"], entry["query"])
 
                 record = {
                     "query_id": query_id,
@@ -232,6 +246,7 @@ def run_eval(model_id: str, tier_filter=None, resume=False):
                     "legitimacy": entry["legitimacy"],
                     "style_tags": entry.get("style_tags", []),
                     "model": model_id,
+                    "query": entry["query"],
                     "response_text": api_result["response_text"],
                     "stop_reason": api_result["stop_reason"],
                     "input_tokens": api_result["input_tokens"],

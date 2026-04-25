@@ -29,7 +29,11 @@ SONNET_PATH = RESULTS_DIR / "raw_claude-sonnet-4-6.jsonl"
 # ---------------------------------------------------------------------------
 
 def load_sonnet() -> list[dict]:
-    return [json.loads(l) for l in SONNET_PATH.read_text().splitlines() if l.strip()]
+    return [
+        json.loads(line)
+        for line in SONNET_PATH.read_text().splitlines()
+        if line.strip()
+    ]
 
 
 # ---------------------------------------------------------------------------
