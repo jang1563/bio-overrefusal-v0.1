@@ -47,16 +47,6 @@ HF_RELEASE_FILES = (
         required=False,
     ),
     ReleaseFile(
-        Path("results/stats_table.json"),
-        Path("results/stats_table.json"),
-        required=False,
-    ),
-    ReleaseFile(
-        Path("results/fpr_table.csv"),
-        Path("results/fpr_table.csv"),
-        required=False,
-    ),
-    ReleaseFile(
         Path("results/qualitative_report.md"),
         Path("results/qualitative_report.md"),
         required=False,

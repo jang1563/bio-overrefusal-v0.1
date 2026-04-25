@@ -22,6 +22,11 @@ annotations_creators:
   - expert-generated
 source_datasets:
   - original
+configs:
+  - config_name: default
+    data_files:
+      - split: train
+        path: data/queries.jsonl
 dataset_info:
   features:
     - name: query_id
@@ -93,7 +98,7 @@ dataset_info:
 
 ## Dataset Summary
 
-The **Bio Over-Refusal Dataset** is an expert-annotated benchmark of 201 legitimate biology research queries stratified by sensitivity tier. It is designed to measure the **false-positive refusal rate (FPR)** of large language models — specifically, the rate at which models refuse or hedge on questions that credentialed biology researchers would consider appropriate to answer.
+The **Bio Over-Refusal Dataset** is a domain-expert-authored and tier-annotated benchmark of 201 legitimate biology research queries stratified by sensitivity tier. It is designed to measure the **false-positive refusal rate (FPR)** of large language models — specifically, the rate at which models refuse or hedge on questions that credentialed biology researchers would consider appropriate to answer.
 
 The dataset does **not** contain wet-lab protocols, synthesis instructions, weaponization parameters, dosing guidance, evasion guidance, or optimization requests for harmful biological agents or toxins. Every included query is either demonstrably legitimate (Tiers 1–4) or annotated as a genuine expert-disagreement case (Tier 5). The dataset is intended for AI safety evaluation, not for adversarial prompt engineering.
 
@@ -160,11 +165,11 @@ ds = load_dataset(
 )["train"]
 ```
 
-When this card is published on Hugging Face, use `dataset_card.md` as the
-dataset repository `README.md` and upload `data/queries.jsonl` as the `train`
-split. The explicit feature schema in `schema/features.py` is recommended
-because nullable adjudication fields can otherwise drift under automatic type
-inference.
+On Hugging Face, the card's `configs` metadata restricts the dataset viewer to
+`data/queries.jsonl` as the `train` split. This prevents human-readable reports
+and other release artifacts from being interpreted as dataset rows. The explicit
+feature schema in `schema/features.py` is recommended because nullable
+adjudication fields can otherwise drift under automatic type inference.
 
 ## Data Collection & Annotation
 
@@ -243,7 +248,7 @@ See `scripts/run_claude_eval.py` and `scripts/analyze_results.py`.
 
 All Anthropic Sonnet/Opus refusals are hard API-level stops (`stop_reason="refusal"`, empty response).  
 Sonnet 4.6 Tier 3 FPR: 79.1% (34/43) [64.8%, 88.6%]. Tier 4 FPR: 65.0% (26/40) [49.5%, 77.9%].  
-FPR increases with model size within the Anthropic family: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%).  
+FPR is higher in the larger tested Anthropic models: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%).  
 All non-Anthropic models: 0.0–0.5% FPR. McNemar p < 0.0001 (Haiku vs Sonnet). Exact binomial vs 0.05% baseline: p < 0.0001.  
 See `results/stats_report.md` for full statistical analysis.
 
@@ -257,13 +262,13 @@ This dataset was designed with careful attention to dual-use concerns:
 
 3. **Tier 5 documentation**: Edge cases where refusal might be appropriate are documented in Tier 5 with explicit expert-disagreement annotations, not treated as over-refusal cases.
 
-4. **Sensitivity review**: The dataset was reviewed during a self-audit phase. Pre-release red-team review is planned before public release.
+4. **Sensitivity review**: The dataset was reviewed during a self-audit phase. External red-team and domain review are planned for v0.2.0.
 
 ## Known Limitations
 
 1. **Single primary annotator**: All 201 queries were authored and initially tiered by one annotator. LLM-based IAA (gemini-2.5-flash) shows strong agreement (Tier κ = 0.885, Legitimacy AC1 = 0.890), but human Annotator 2 recruitment is ongoing. Results will be updated with human IAA in v0.2.0.
 
-2. **Expert review not circulated pre-release**: Phase 1 external expert circulation was deferred by project decision (2026-04-17). Tier definitions and seed set are internally validated. Community feedback is welcome via GitHub issues.
+2. **External expert review not yet circulated**: Phase 1 external expert circulation was deferred by project decision (2026-04-17). Tier definitions and seed set are internally validated. Community feedback is welcome via GitHub issues.
 
 3. **English-only, single-turn**: All queries are in English and assume a single-turn interaction. Multi-turn refusal dynamics are not captured.
 
@@ -276,7 +281,7 @@ This dataset was designed with careful attention to dual-use concerns:
   title     = {Bio Over-Refusal Dataset v0.1.0},
   author    = {Kim, JangKeun},
   year      = {2026},
-  note      = {Pre-release. Phase 3 inter-annotator agreement pending.},
+  note      = {Initial public release v0.1.0, April 2026. Phase 3 human inter-annotator agreement pending.},
   license   = {CC BY-NC-SA 4.0}
 }
 ```

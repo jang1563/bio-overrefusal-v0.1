@@ -14,7 +14,7 @@ Hugging Face dataset repository.
 4. Review `README.md`, `dataset_card.md`, `tier_definitions.md`, and
    `results/stats_report.md` for public-facing claims and limitations.
 5. Set the repository description to:
-   `Expert-annotated benchmark for LLM over-refusal on legitimate biology research queries.`
+   `Domain-expert-authored benchmark for LLM over-refusal on legitimate biology research queries.`
 6. Add repository topics:
    `ai-safety`, `biosecurity`, `biology`, `llm-evaluation`, `benchmark`,
    `over-refusal`, `huggingface-datasets`.
@@ -34,6 +34,8 @@ dataset viewer and for reproducible evaluation:
 - `tier_definitions.md`
 - `LICENSE`
 - Optional generated summaries from `results/`, excluding raw model responses
+  and excluding machine-readable `.json`/`.csv` result tables that the HF dataset
+  builder may try to ingest as rows
 
 Build the upload bundle from GitHub with:
 
@@ -44,10 +46,11 @@ python scripts/prepare_hf_release.py --force --repo-id <hf-user-or-org>/bio-over
 Before publishing, open the dataset page and check:
 
 1. The dataset card renders with the YAML front matter intact.
-2. The viewer shows exactly 201 rows in the `train` split.
-3. The field types match `schema/jsonl_schema.md`.
-4. The license displays as `cc-by-nc-sa-4.0`.
-5. The first-screen summary clearly says the dataset is for false-positive
+2. The YAML `configs` block points only to `data/queries.jsonl`.
+3. The preview/viewer shows exactly 201 rows in the `train` split.
+4. The field types match `schema/jsonl_schema.md`.
+5. The license displays as `cc-by-nc-sa-4.0`.
+6. The first-screen summary clearly says the dataset is for false-positive
    refusal evaluation, not harmful-content elicitation.
 
 ## Versioning

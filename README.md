@@ -5,7 +5,7 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey)](LICENSE)
 [![Hugging Face Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
 
-> **TL;DR.** 201 expert-annotated biology research queries, tier-stratified by sensitivity, used to measure **false-positive refusal rates (FPR)** in frontier LLMs. **Anthropic Claude Opus 4.7 refuses 43.6%** of legitimate biology research queries; Sonnet 4.5/4.6 refuse 33.7%; Haiku 4.5 and all non-Anthropic models tested refuse ≤0.5%. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`).
+> **TL;DR.** 201 domain-expert-authored and tier-annotated biology research queries, stratified by sensitivity, used to measure **false-positive refusal rates (FPR)** in frontier LLMs. **Anthropic Claude Opus 4.7 refuses 43.6%** of legitimate biology research queries; Sonnet 4.5/4.6 refuse 33.7%; Haiku 4.5 and non-Anthropic full-run models show 0% strict refusals. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`).
 
 This repository contains the dataset, schema, evaluation scripts, statistical analysis, and release documentation needed to reproduce the v0.1.0 results. It is intended for AI safety evaluation and safety-calibration research, **not** for harmful-content elicitation.
 
@@ -20,7 +20,7 @@ This repository contains the dataset, schema, evaluation scripts, statistical an
 |---------|--------|
 | Dataset | v0.1.0 — 201 annotated queries, schema-validated in CI |
 | GitHub | Public, CI green on Python 3.10 / 3.11 / 3.12 |
-| Hugging Face | Public dataset repo, CC BY-NC-SA 4.0, viewer enabled |
+| Hugging Face | Public dataset repo, CC BY-NC-SA 4.0, viewer configured for `data/queries.jsonl` |
 | Human IAA | Pending for v0.2.0 (LLM-based validation reported in `results/iaa_report.md`) |
 
 ## Headline Finding
@@ -37,7 +37,7 @@ This repository contains the dataset, schema, evaluation scripts, statistical an
 | **claude-opus-4-7** | **181** | **43.6%** | **[36.6%, 50.9%]** | Highest FPR |
 | gpt-4o | 40 | 0.0% | [0.0%, 8.8%] | T4+T5 only |
 
-**FPR scales with model size within the Anthropic family**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%). All non-Anthropic models: 0.0–0.5%. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`, empty response).
+**FPR is higher in the larger tested Anthropic models**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%). Non-Anthropic models had 0% strict refusals in the tested runs, with 0.0–0.5% broad FPR. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`, empty response).
 
 Exact binomial test vs Anthropic's published 0.05% baseline: **p < 0.0001**.  
 McNemar (Haiku vs Sonnet 4.6, 181 paired queries): **p < 0.0001** (BH q < 0.0001).
@@ -141,7 +141,7 @@ CONTRIBUTING.md          — Contribution and dual-use safety guidelines
 
 ## Key Findings
 
-1. **FPR scales with model size**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%) — all non-Anthropic models ≤0.5%
+1. **FPR is higher in the larger tested Anthropic models**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%) — non-Anthropic models had 0% strict refusals and ≤0.5% broad FPR
 2. **All Anthropic refusals are API-level**: `stop_reason="refusal"` with empty `content[]` — not safety hedging
 3. **T3 most affected (79.1%)**: Regulatory/policy topics (BSL-3 specs, DURC framework, CWC scheduling) blocked despite being publicly available government policy
 4. **T4 also severely affected (65.0%)**: Primary mechanistic research questions refused
@@ -179,7 +179,7 @@ CONTRIBUTING.md          — Contribution and dual-use safety guidelines
 - **FalseReject** (16K, 44 categories): General safety topics
 - **Health-ORSC-Bench** (31K, 2024): Health-general, not biology-research-specific
 
-This dataset fills the gap: biology-research-specific, expert-annotated, sensitivity-stratified, with hard API-level refusal detection.
+This dataset fills the gap: biology-research-specific, domain-expert-authored, sensitivity-stratified, with hard API-level refusal detection.
 
 ## Responsible Use
 
@@ -202,7 +202,7 @@ See [`SAFETY.md`](SAFETY.md) for the public responsible-use scope and reporting 
   title     = {Bio Over-Refusal Dataset v0.1.0},
   author    = {Kim, JangKeun},
   year      = {2026},
-  note      = {Pre-release v0.1.0, April 2026. Phase 3 human IAA pending.},
+  note      = {Initial public release v0.1.0, April 2026. Phase 3 human IAA pending.},
   license   = {CC BY-NC-SA 4.0}
 }
 ```

@@ -8,7 +8,7 @@ authors:
     given-names: JangKeun
 license: "CC-BY-NC-SA-4.0"
 repository-code: "https://github.com/jang1563/bio-overrefusal-v0.1"
-abstract: "An expert-annotated benchmark for measuring false-positive refusal rates of large language models on legitimate biology research queries."
+abstract: "A domain-expert-authored and tier-annotated benchmark for measuring false-positive refusal rates of large language models on legitimate biology research queries."
 keywords:
   - ai-safety
   - biosecurity

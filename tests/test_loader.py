@@ -253,6 +253,10 @@ def test_dataset_card_metadata_matches_loader_schema() -> None:
         for feature in features
     }
     assert metadata["license"] == "cc-by-nc-sa-4.0"
+    assert metadata["configs"] == [{
+        "config_name": "default",
+        "data_files": [{"split": "train", "path": "data/queries.jsonl"}],
+    }]
     assert metadata["dataset_info"]["splits"][0]["num_examples"] == 201
     assert feature_names == set(FEATURE_FIELD_NAMES)
 

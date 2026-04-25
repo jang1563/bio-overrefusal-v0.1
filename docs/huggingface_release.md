@@ -23,11 +23,16 @@ not upload anything by itself.
 Check these files in the generated bundle:
 
 - `README.md` renders the YAML dataset card front matter.
+- `README.md` contains a `configs` block that points the viewer only to
+  `data/queries.jsonl`.
 - `data/queries.jsonl` contains exactly 201 rows.
 - `schema/jsonl_schema.md`, `schema/features.py`, and `schema/vocab.yaml` match the GitHub release.
 - `MANIFEST.md` lists file sizes and SHA-256 hashes.
 - No `results/raw_*.jsonl`, `results/llm_classified_*.jsonl`, or
   `results/summary_*.json` files are present.
+- No machine-readable result tables such as `results/stats_table.json` or
+  `results/fpr_table.csv` are present in the HF bundle; keep those on GitHub so
+  the HF dataset builder does not treat them as data rows.
 
 ## Publish
 
@@ -40,6 +45,9 @@ huggingface-cli upload <hf-user-or-org>/bio-overrefusal build/huggingface_datase
 Then open the dataset page and verify:
 
 - The viewer shows the `train` split with 201 rows.
+- `https://datasets-server.huggingface.co/is-valid?dataset=<repo-id>` reports
+  `preview: true`; full `viewer/search/filter/statistics` may take additional
+  worker time after upload.
 - The license displays as `cc-by-nc-sa-4.0`.
 - The first screen clearly frames the dataset as false-positive refusal
   evaluation, not harmful-content elicitation.

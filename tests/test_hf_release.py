@@ -25,6 +25,8 @@ def test_hf_release_bundle_contains_public_files_only(tmp_path: Path) -> None:
     assert not list(out_dir.glob("results/raw_*.jsonl"))
     assert not list(out_dir.glob("results/llm_classified_*.jsonl"))
     assert not list(out_dir.glob("results/summary_*.json"))
+    assert not (out_dir / "results" / "stats_table.json").exists()
+    assert not (out_dir / "results" / "fpr_table.csv").exists()
 
     manifest = (out_dir / "MANIFEST.md").read_text()
     assert "Raw provider outputs are intentionally excluded" in manifest
