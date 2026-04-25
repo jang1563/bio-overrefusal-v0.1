@@ -2,7 +2,7 @@
 """Prepare a reproducible Hugging Face dataset-repository bundle.
 
 This script performs local file assembly only. It never uploads data or reads
-API tokens. Use the printed `huggingface-cli upload` command after reviewing the
+API tokens. Use the printed `hf upload` command after reviewing the
 output directory.
 """
 
@@ -152,7 +152,7 @@ def main() -> None:
     if args.repo_id:
         print()
         print("After reviewing the bundle, publish with:")
-        print(f"huggingface-cli upload {args.repo_id} {args.out_dir} . --repo-type dataset")
+        print(f"hf upload {args.repo_id} {args.out_dir} . --repo-type dataset")
 
 
 if __name__ == "__main__":

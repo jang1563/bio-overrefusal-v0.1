@@ -39,7 +39,7 @@ Check these files in the generated bundle:
 After review:
 
 ```bash
-huggingface-cli upload <hf-user-or-org>/bio-overrefusal build/huggingface_dataset . --repo-type dataset
+hf upload <hf-user-or-org>/bio-overrefusal build/huggingface_dataset . --repo-type dataset
 ```
 
 Then open the dataset page and verify:
