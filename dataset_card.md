@@ -29,17 +29,17 @@ dataset_info:
     - name: query
       dtype: string
     - name: tier
-      dtype: int64
+      dtype: int32
     - name: subdomain_primary
       dtype: string
     - name: subdomain_secondary
-      sequence: string
+      list: string
     - name: legitimacy
       dtype: string
     - name: biological_reasoning
       dtype: string
     - name: legitimate_contexts
-      sequence:
+      list:
         - name: role
           dtype: string
         - name: setting
@@ -49,7 +49,7 @@ dataset_info:
         - name: durc_category
           dtype: string
     - name: danger_shift_contexts
-      sequence:
+      list:
         - name: role
           dtype: string
         - name: setting
@@ -59,9 +59,9 @@ dataset_info:
         - name: durc_category
           dtype: string
     - name: style_tags
-      sequence: string
+      list: string
     - name: citations
-      sequence:
+      list:
         - name: source_type
           dtype: string
         - name: identifier
@@ -69,15 +69,15 @@ dataset_info:
         - name: url
           dtype: string
     - name: annotator_1_tier
-      dtype: int64
+      dtype: int32
     - name: annotator_1_legitimacy
       dtype: string
     - name: annotator_2_tier
-      dtype: int64
+      dtype: int32
     - name: annotator_2_legitimacy
       dtype: string
     - name: adjudicated_tier
-      dtype: int64
+      dtype: int32
     - name: adjudicated_legitimacy
       dtype: string
     - name: reviewer_comments

@@ -244,6 +244,8 @@ def test_full_dataset_release_invariants() -> None:
 
 
 def test_dataset_card_metadata_matches_loader_schema() -> None:
+    from datasets import DatasetInfo
+
     metadata = load_dataset_card_metadata()
     features = metadata["dataset_info"]["features"]
     feature_names = {
@@ -254,11 +256,14 @@ def test_dataset_card_metadata_matches_loader_schema() -> None:
     assert metadata["dataset_info"]["splits"][0]["num_examples"] == 201
     assert feature_names == set(FEATURE_FIELD_NAMES)
 
+    parsed_info = DatasetInfo._from_yaml_dict(metadata["dataset_info"])
+    assert parsed_info.features == make_features()
+
     nested = {feature["name"]: feature for feature in features}
     context_names = {"role", "setting", "description", "durc_category"}
     for field in ("legitimate_contexts", "danger_shift_contexts"):
-        assert {item["name"] for item in nested[field]["sequence"]} == context_names
-    assert {item["name"] for item in nested["citations"]["sequence"]} == {
+        assert {item["name"] for item in nested[field]["list"]} == context_names
+    assert {item["name"] for item in nested["citations"]["list"]} == {
         "source_type",
         "identifier",
         "url",
