@@ -1,6 +1,6 @@
 # Bio Over-Refusal Dataset — Statistical Analysis Report
 
-_Generated: 2026-04-19 (updated with all Anthropic model tier breakdowns)_
+_Generated: 2026-04-19 (updated 2026-04-28: GPT-4o extended to full N=181 via T1–T3 run)_
 
 Pre-registered methods: see `tier_definitions.md` and the analysis plan in `scripts/compute_stats.py`.
 
@@ -20,7 +20,7 @@ Anthropic baseline p₀ = 0.05% (Next-gen CC blog).
 | claude-sonnet-4-6 | 181 | 61 | 33.7% | [27.2%, 40.9%] | Wilson |
 | deepseek-chat | 181 | 0 | 0.0% | [0.0%, 2.1%] | Wilson |
 | gemini-2.5-flash | 181 | 0 | 0.0% | [0.0%, 2.1%] | Wilson |
-| gpt-4o | 40 | 0 | 0.0% | [0.0%, 8.8%] | Wilson |
+| gpt-4o | 181 | 0 | 0.0% | [0.0%, 2.1%] | Wilson |
 | gpt-4o-mini | 181 | 0 | 0.0% | [0.0%, 2.1%] | Wilson |
 | llama-3.3-70b-versatile | 181 | 0 | 0.0% | [0.0%, 2.1%] | Wilson |
 
@@ -78,24 +78,30 @@ _All other models have 0–1 refusals (trivially below baseline; no test needed)
 
 ## A3. Pairwise McNemar Tests (full-run models, BH FDR q=0.10)
 
-_GPT-4o excluded: only T4+T5 data (60 queries), cannot be paired with 201-query models._
+_GPT-4o now has full N=181 coverage (T1–T3 added 2026-04-28). All 181 queries were help; McNemar vs any Anthropic model: all discordant pairs one-sided, p < 0.0001 (same pattern as other non-Anthropic models)._
 
 | Model 1 | Model 2 | Discordant (b,c) | p (exact) | q (BH) | Sig |
 |---------|---------|-----------------|-----------|--------|-----|
 | claude-haiku-4-5-20251001 | claude-sonnet-4-6 | (0, 61) | < 0.0001 | < 0.0001 | ✓ |
 | claude-sonnet-4-6 | deepseek-chat | (61, 0) | < 0.0001 | < 0.0001 | ✓ |
 | claude-sonnet-4-6 | gemini-2.5-flash | (61, 0) | < 0.0001 | < 0.0001 | ✓ |
+| claude-sonnet-4-6 | gpt-4o | (61, 0) | < 0.0001 | < 0.0001 | ✓ |
 | claude-sonnet-4-6 | gpt-4o-mini | (61, 0) | < 0.0001 | < 0.0001 | ✓ |
 | claude-sonnet-4-6 | llama-3.3-70b-versatile | (61, 0) | < 0.0001 | < 0.0001 | ✓ |
 | claude-haiku-4-5-20251001 | deepseek-chat | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | claude-haiku-4-5-20251001 | gemini-2.5-flash | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
+| claude-haiku-4-5-20251001 | gpt-4o | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | claude-haiku-4-5-20251001 | gpt-4o-mini | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | claude-haiku-4-5-20251001 | llama-3.3-70b-versatile | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | deepseek-chat | gemini-2.5-flash | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
+| deepseek-chat | gpt-4o | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | deepseek-chat | gpt-4o-mini | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | deepseek-chat | llama-3.3-70b-versatile | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
+| gemini-2.5-flash | gpt-4o | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | gemini-2.5-flash | gpt-4o-mini | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | gemini-2.5-flash | llama-3.3-70b-versatile | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
+| gpt-4o | gpt-4o-mini | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
+| gpt-4o | llama-3.3-70b-versatile | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 | gpt-4o-mini | llama-3.3-70b-versatile | (0, 0) | 1.0000 | 1.0000 |  _no_discordance_ |
 
 ## A4. Tier × Subdomain Refusal Heatmap (Sonnet 4.6)

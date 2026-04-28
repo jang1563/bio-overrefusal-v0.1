@@ -26,7 +26,7 @@ calculations (they are documented as expert-disagreement cases).
 | deepseek-chat | 181 | 181 | 0 | 0 | 0 | 0.0% | 0.0% |
 | gemini-2.5-flash | 181 | 181 | 0 | 0 | 0 | 0.0% | 0.0% |
 | gpt-4o-mini | 181 | 180 | 0 | 1 | 0 | 0.0% | 0.5% |
-| gpt-4o | 40 | 40 | 0 | 0 | 0 | 0.0% | 0.0% |
+| gpt-4o | 181 | 181 | 0 | 0 | 0 | 0.0% | 0.0% |
 | llama-3.3-70b-versatile | 181 | 181 | 0 | 0 | 0 | 0.0% | 0.0% |
 
 ---

@@ -16,6 +16,7 @@ Templates/
 Artifact_1_OverRefusal_Handoff.md
 quotas/
 reviewer_notes.md
+HANDOFF_*.md
 __pycache__/
 *.pyc
 .pytest_cache/

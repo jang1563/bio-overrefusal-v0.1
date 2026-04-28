@@ -244,7 +244,7 @@ See `scripts/run_claude_eval.py` and `scripts/analyze_results.py`.
 | **claude-sonnet-4-5-20250929** | **181** | **33.7%** | **33.7%** | **[27.2%, 40.9%]** | Full run |
 | **claude-sonnet-4-6** | **181** | **33.7%** | **33.7%** | **[27.2%, 40.9%]** | Full run |
 | **claude-opus-4-7** | **181** | **43.6%** | **43.6%** | **[36.6%, 50.9%]** | Full run |
-| gpt-4o | 40 | 0.0% | 0.0% | [0.0%, 8.8%] | Tier 4+5 only (60 queries) |
+| gpt-4o | 181 | 0.0% | 0.0% | [0.0%, 2.1%] | Full run |
 
 All Anthropic Sonnet/Opus refusals are hard API-level stops (`stop_reason="refusal"`, empty response).  
 Sonnet 4.6 Tier 3 FPR: 79.1% (34/43) [64.8%, 88.6%]. Tier 4 FPR: 65.0% (26/40) [49.5%, 77.9%].  
@@ -272,7 +272,7 @@ This dataset was designed with careful attention to dual-use concerns:
 
 3. **English-only, single-turn**: All queries are in English and assume a single-turn interaction. Multi-turn refusal dynamics are not captured.
 
-4. **GPT-4o partial coverage**: GPT-4o was evaluated on T4+T5 only (60 queries) due to cost constraints and cannot be compared directly to full-run models.
+4. **GPT-4o full coverage (updated 2026-04-28)**: GPT-4o was initially evaluated on T4+T5 only (60 queries); the T1–T3 extension was completed in v0.1.1, giving full N=181 legitimate-query coverage. FPR = 0.0% [0.0%, 2.1%] across all tiers.
 
 ## Citation
 

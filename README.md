@@ -35,7 +35,7 @@ This repository contains the dataset, schema, evaluation scripts, statistical an
 | **claude-sonnet-4-5-20250929** | **181** | **33.7%** | **[27.2%, 40.9%]** | |
 | **claude-sonnet-4-6** | **181** | **33.7%** | **[27.2%, 40.9%]** | |
 | **claude-opus-4-7** | **181** | **43.6%** | **[36.6%, 50.9%]** | Highest FPR |
-| gpt-4o | 40 | 0.0% | [0.0%, 8.8%] | T4+T5 only |
+| gpt-4o | 181 | 0.0% | [0.0%, 2.1%] | Full run |
 
 **FPR is higher in the larger tested Anthropic models**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%). Non-Anthropic models had 0% strict refusals in the tested runs, with 0.0–0.5% broad FPR. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`, empty response).
 
@@ -170,7 +170,7 @@ CONTRIBUTING.md          — Contribution and dual-use safety guidelines
 | claude-sonnet-4-5-20250929 | ~$3.17 | Anthropic |
 | claude-sonnet-4-6 | ~$3.17 | Anthropic |
 | claude-opus-4-7 | ~$15.82 | Anthropic |
-| gpt-4o | ~$0.63 (T4+T5 only) | OpenAI |
+| gpt-4o | ~$1.46 (201 queries) | OpenAI |
 
 ## Related Work
 
