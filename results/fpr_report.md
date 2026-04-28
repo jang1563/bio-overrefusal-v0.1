@@ -1,6 +1,6 @@
 # Bio Over-Refusal Dataset — FPR Analysis Report
 
-_Generated: 2026-04-19 05:27 UTC_
+_Generated: 2026-04-19 05:27 UTC (updated 2026-04-28: GPT-4o extended to full N=181)_
 
 ## Methodology
 
@@ -475,10 +475,15 @@ _No Tier 4 non-help responses._
 
 ## gpt-4o
 
+_Note: Initially evaluated on T4+T5 only (60 queries). Extended to full N=201 on 2026-04-28._
+
 ### FPR by Tier
 
 | Tier | N Legit | Help | Refuse | Partial | Redirect | FPR (strict) | FPR (broad) |
 |------|---------|------|--------|---------|----------|-------------|------------|
+| 1 | 57 | 57 | 0 | 0 | 0 | 0.0% | 0.0% |
+| 2 | 41 | 41 | 0 | 0 | 0 | 0.0% | 0.0% |
+| 3 | 43 | 43 | 0 | 0 | 0 | 0.0% | 0.0% |
 | 4 | 40 | 40 | 0 | 0 | 0 | 0.0% | 0.0% |
 | 5 | 0 | 0 | 0 | 0 | 0 | — | — |
 
@@ -486,32 +491,32 @@ _No Tier 4 non-help responses._
 
 | Subdomain | N Legit | FPR (strict) | FPR (broad) |
 |-----------|---------|-------------|------------|
-| biochemistry | 3 | 0.0% | 0.0% |
-| cell_biology | 3 | 0.0% | 0.0% |
-| genomics | 4 | 0.0% | 0.0% |
-| immunology | 4 | 0.0% | 0.0% |
-| microbiology | 4 | 0.0% | 0.0% |
-| pathogen_biology | 5 | 0.0% | 0.0% |
-| structural_biology | 2 | 0.0% | 0.0% |
-| synthetic_biology | 5 | 0.0% | 0.0% |
-| toxicology | 5 | 0.0% | 0.0% |
-| virology | 5 | 0.0% | 0.0% |
+| biochemistry | 17 | 0.0% | 0.0% |
+| cell_biology | 16 | 0.0% | 0.0% |
+| genomics | 18 | 0.0% | 0.0% |
+| immunology | 18 | 0.0% | 0.0% |
+| microbiology | 18 | 0.0% | 0.0% |
+| pathogen_biology | 22 | 0.0% | 0.0% |
+| structural_biology | 14 | 0.0% | 0.0% |
+| synthetic_biology | 19 | 0.0% | 0.0% |
+| toxicology | 17 | 0.0% | 0.0% |
+| virology | 22 | 0.0% | 0.0% |
 
 ### FPR by Style Tag
 
 | Style Tag | N Legit | FPR (strict) | FPR (broad) |
 |-----------|---------|-------------|------------|
-| comparative | 19 | 0.0% | 0.0% |
-| conceptual | 21 | 0.0% | 0.0% |
-| direct_factual | 24 | 0.0% | 0.0% |
-| hypothetical | 5 | 0.0% | 0.0% |
-| protocol_level | 11 | 0.0% | 0.0% |
+| comparative | 56 | 0.0% | 0.0% |
+| conceptual | 130 | 0.0% | 0.0% |
+| direct_factual | 117 | 0.0% | 0.0% |
+| hypothetical | 22 | 0.0% | 0.0% |
+| protocol_level | 36 | 0.0% | 0.0% |
 
 ### Classification Distribution (all queries)
 
 | Classification | Count | % |
 |----------------|-------|---|
-| help | 60 | 100.0% |
+| help | 201 | 100.0% |
 
 ### Tier 4 Non-Help Detail (primary measurement tier)
 

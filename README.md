@@ -202,7 +202,7 @@ See [`SAFETY.md`](SAFETY.md) for the public responsible-use scope and reporting 
   title     = {Bio Over-Refusal Dataset v0.1.0},
   author    = {Kim, JangKeun},
   year      = {2026},
-  note      = {Initial public release v0.1.0, April 2026. Phase 3 human IAA pending.},
+  note      = {Initial public release v0.1.0, April 2026. Phase 3 human inter-annotator agreement pending.},
   license   = {CC BY-NC-SA 4.0}
 }
 ```

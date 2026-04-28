@@ -272,7 +272,7 @@ This dataset was designed with careful attention to dual-use concerns:
 
 3. **English-only, single-turn**: All queries are in English and assume a single-turn interaction. Multi-turn refusal dynamics are not captured.
 
-4. **GPT-4o full coverage (updated 2026-04-28)**: GPT-4o was initially evaluated on T4+T5 only (60 queries); the T1–T3 extension was completed in v0.1.1, giving full N=181 legitimate-query coverage. FPR = 0.0% [0.0%, 2.1%] across all tiers.
+4. **GPT-4o full coverage (updated 2026-04-28)**: GPT-4o was initially evaluated on T4+T5 only (60 queries); the T1–T3 extension was completed in v0.1.0 (April 2026), giving full N=181 legitimate-query coverage. FPR = 0.0% [0.0%, 2.1%] across all tiers.
 
 ## Citation
 
