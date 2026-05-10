@@ -14,11 +14,26 @@ This repository contains the dataset, schema, evaluation scripts, statistical an
 - **Statistical report:** [`results/stats_report.md`](results/stats_report.md)
 - **Responsible-use scope:** [`SAFETY.md`](SAFETY.md)
 
+## Try It in 30 Seconds
+
+The dataset is published on HuggingFace and can be loaded directly without cloning.
+
+```python
+from datasets import load_dataset
+
+ds = load_dataset("jang1563/bio-overrefusal-v0.1", split="train")
+print(f"Loaded {len(ds)} queries across {len(set(q['subdomain'] for q in ds))} subdomains")
+print("Example T4 query:", next(q for q in ds if q['tier'] == 4)['text'][:120])
+```
+
+To replicate the headline FPR finding on a model of your choice, use `scripts/run_multi_eval.py` (see Quick Start below).
+
+
 ## Release Status
 
 | Surface | Status |
 |---------|--------|
-| Dataset | v0.1.0 — 201 annotated queries, schema-validated in CI |
+| Dataset | v0.1.0: 201 annotated queries, schema-validated in CI |
 | GitHub | Public, CI green on Python 3.10 / 3.11 / 3.12 |
 | Hugging Face | Public dataset repo, CC BY-NC-SA 4.0, viewer configured for `data/queries.jsonl` |
 | Human IAA | Pending for v0.2.0 (LLM-based validation reported in `results/iaa_report.md`) |
@@ -112,40 +127,40 @@ Raw model outputs are intentionally ignored by git (`results/raw_*.jsonl`) becau
 ## Repository Structure
 
 ```
-.github/workflows/ci.yml — CI validation for loader + dataset invariants
+.github/workflows/ci.yml: CI validation for loader + dataset invariants
 data/
-  queries.jsonl          — 201 annotated queries (the dataset)
-schema/                  — JSON schema for queries.jsonl
-  features.py            — Canonical Hugging Face `Features` declaration
+  queries.jsonl         : 201 annotated queries (the dataset)
+schema/                 : JSON schema for queries.jsonl
+  features.py           : Canonical Hugging Face `Features` declaration
 scripts/
-  run_claude_eval.py     — Anthropic-SDK evaluator
-  run_multi_eval.py      — Multi-provider evaluator
-  classify_with_llm.py   — LLM-as-judge reclassifier
-  analyze_results.py     — FPR report generator
-  compute_stats.py       — Pre-registered statistical analysis
-  analyze_refusals.py    — Qualitative refusal analysis
-  compute_iaa.py         — IAA computation (LLM-as-Annotator-2)
-  prepare_hf_release.py  — Local Hugging Face dataset-repo bundle builder
-results/                 — Generated outputs (raw_*.jsonl excluded from git)
-  fpr_report.md          — Multi-model FPR comparison
-  stats_report.md        — Wilson CIs, McNemar, BH FDR
-  qualitative_report.md  — Keyword analysis, refusal clusters
-  iaa_report.md          — LLM-based label validation (human IAA pending)
+  run_claude_eval.py    : Anthropic-SDK evaluator
+  run_multi_eval.py     : Multi-provider evaluator
+  classify_with_llm.py  : LLM-as-judge reclassifier
+  analyze_results.py    : FPR report generator
+  compute_stats.py      : Pre-registered statistical analysis
+  analyze_refusals.py   : Qualitative refusal analysis
+  compute_iaa.py        : IAA computation (LLM-as-Annotator-2)
+  prepare_hf_release.py : Local Hugging Face dataset-repo bundle builder
+results/                : Generated outputs (raw_*.jsonl excluded from git)
+  fpr_report.md         : Multi-model FPR comparison
+  stats_report.md       : Wilson CIs, McNemar, BH FDR
+  qualitative_report.md : Keyword analysis, refusal clusters
+  iaa_report.md         : LLM-based label validation (human IAA pending)
 docs/
-  public_release_checklist.md — GitHub + Hugging Face release checklist
-  huggingface_release.md      — HF bundle/upload workflow
-tier_definitions.md      — Pre-registered tier criteria
-dataset_card.md          — HuggingFace dataset card
-CONTRIBUTING.md          — Contribution and dual-use safety guidelines
+  public_release_checklist.md: GitHub + Hugging Face release checklist
+  huggingface_release.md     : HF bundle/upload workflow
+tier_definitions.md     : Pre-registered tier criteria
+dataset_card.md         : HuggingFace dataset card
+CONTRIBUTING.md         : Contribution and dual-use safety guidelines
 ```
 
 ## Key Findings
 
-1. **FPR is higher in the larger tested Anthropic models**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%) — non-Anthropic models had 0% strict refusals and ≤0.5% broad FPR
-2. **All Anthropic refusals are API-level**: `stop_reason="refusal"` with empty `content[]` — not safety hedging
+1. **FPR is higher in the larger tested Anthropic models**: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%): non-Anthropic models had 0% strict refusals and ≤0.5% broad FPR
+2. **All Anthropic refusals are API-level**: `stop_reason="refusal"` with empty `content[]`: not safety hedging
 3. **T3 most affected (79.1%)**: Regulatory/policy topics (BSL-3 specs, DURC framework, CWC scheduling) blocked despite being publicly available government policy
 4. **T4 also severely affected (65.0%)**: Primary mechanistic research questions refused
-5. **Intra-family gap**: Haiku 4.5 (0%) vs Sonnet 4.6 (33.7%) vs Opus 4.7 (43.6%) — same queries
+5. **Intra-family gap**: Haiku 4.5 (0%) vs Sonnet 4.6 (33.7%) vs Opus 4.7 (43.6%): same queries
 6. **T2 anomaly**: One methodology question about bat coronavirus assays refused by keyword matching
 7. **Hypothetical framing = highest FPR** (59.1%): "suppose a researcher..." triggers more refusals
 
@@ -209,4 +224,4 @@ See [`SAFETY.md`](SAFETY.md) for the public responsible-use scope and reporting 
 
 ## License
 
-[CC BY-NC-SA 4.0](LICENSE) — Attribution-NonCommercial-ShareAlike 4.0 International
+[CC BY-NC-SA 4.0](LICENSE): Attribution-NonCommercial-ShareAlike 4.0 International
