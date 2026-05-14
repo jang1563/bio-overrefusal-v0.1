@@ -96,9 +96,9 @@ def call_gpt4o(client, query: str) -> dict:
 
 def merge_and_stats():
     with open(OUT_T4_T5) as f:
-        existing = [json.loads(l) for l in f if l.strip()]
+        existing = [json.loads(line) for line in f if line.strip()]
     with open(OUT_T1_T3) as f:
-        new = [json.loads(l) for l in f if l.strip()]
+        new = [json.loads(line) for line in f if line.strip()]
 
     combined = existing + new
     assert len(combined) == 201, f"Expected 201, got {len(combined)}"

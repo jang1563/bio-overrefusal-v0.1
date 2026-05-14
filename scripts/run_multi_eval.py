@@ -86,6 +86,11 @@ PROVIDERS = {
         # Trailing slash required for correct URL construction
         "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
     },
+    "gemini-2.5-pro": {
+        "sdk": "openai",
+        "env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+    },
     "llama-3.3-70b-versatile": {
         "sdk": "openai",
         "env": "GROQ_API_KEY",
@@ -108,6 +113,7 @@ PRICING = {  # (input $/M tokens, output $/M tokens)
     "gpt-4o-mini": (0.15, 0.60),
     "deepseek-chat": (0.07, 0.28),
     "gemini-2.5-flash": (0.15, 0.60),
+    "gemini-2.5-pro": (1.25, 10.00),
     "llama-3.3-70b-versatile": (0.59, 0.79),
     "meta-llama/Llama-3.1-70B-Instruct-Turbo": (0.18, 0.18),
 }

@@ -1,7 +1,10 @@
 results/raw_*.jsonl
+results/**/raw_*.jsonl
+results/context_condition/
 results/llm_classified_*.jsonl
 results/summary_*.json
 results/iaa_llm_labels.jsonl
+*.log
 .coverage
 htmlcov/
 build/
