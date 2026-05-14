@@ -246,11 +246,13 @@ See `scripts/run_claude_eval.py` and `scripts/analyze_results.py`.
 | **claude-opus-4-7** | **181** | **43.6%** | **43.6%** | **[36.6%, 50.9%]** | Full run |
 | gpt-4o | 181 | 0.0% | 0.0% | [0.0%, 2.1%] | Full run |
 
-All Anthropic Sonnet/Opus refusals are hard API-level stops (`stop_reason="refusal"`, empty response).  
-Sonnet 4.6 Tier 3 FPR: 79.1% (34/43) [64.8%, 88.6%]. Tier 4 FPR: 65.0% (26/40) [49.5%, 77.9%].  
-FPR is higher in the larger tested Anthropic models: Haiku 4.5 (0%) < Sonnet 4.5/4.6 (33.7%) < Opus 4.7 (43.6%).  
-All non-Anthropic models: 0.0–0.5% FPR. McNemar p < 0.0001 (Haiku vs Sonnet). Exact binomial vs 0.05% baseline: p < 0.0001.  
-See `results/stats_report.md` for full statistical analysis.
+In the v0.1.0 runs, strict FPR varied sharply across providers and model families. The Anthropic Sonnet 4.5/4.6 (33.7%) and Opus 4.7 (43.6%) refusals are hard API-level stops (`stop_reason="refusal"`, empty response), while Haiku 4.5 (0%) and the other full-run models (0.0–0.5% strict FPR) returned substantive answers. Sonnet 4.6 Tier 3 FPR: 79.1% (34/43) [64.8%, 88.6%]. Tier 4 FPR: 65.0% (26/40) [49.5%, 77.9%]. McNemar p < 0.0001 (Haiku vs Sonnet). Exact binomial vs 0.05% baseline: p < 0.0001.
+
+These numbers should be read as a slice-level calibration signal for a specific biology-research benchmark, not as a global model-quality ranking or a claim about any provider's full safety system. See `results/stats_report.md` for full statistical analysis.
+
+## Position in the Safety Stack
+
+This dataset is a **calibration measurement**, not a deployed mitigation. It complements rather than replaces capability evaluations (e.g. WMDP, biothreat-eval), constitutional/classifier safeguards, and red-team work. An organization using this dataset would compute Wilson-CI'd FPR by tier and subdomain on their deployed model, treat T1/T2 refusals as pipeline regressions, and treat T3/T4 patterns as candidate inputs for safeguard policy review. This work is independent and does not represent any provider's internal evaluation pipeline.
 
 ## Ethical Considerations
 
