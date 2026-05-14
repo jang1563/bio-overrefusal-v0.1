@@ -99,7 +99,8 @@ git clone https://github.com/jang1563/bio-overrefusal-v0.1.git && cd bio-overref
 # Install runtime + development dependencies
 python -m pip install -e ".[dev]"
 
-# Validate the dataset schema and loader
+# No-API smoke test (~30 sec, no network, no API keys required)
+# Validates schema, controlled vocabularies, row counts, tier counts, HF loader
 python -m pytest -q
 python -m ruff check .
 
@@ -167,7 +168,7 @@ CONTRIBUTING.md         : Contribution and dual-use safety guidelines
 3. **T3 most affected (79.1%)**: Regulatory/policy topics (BSL-3 specs, DURC framework, CWC scheduling) blocked despite being publicly available government policy
 4. **T4 also severely affected (65.0%)**: Primary mechanistic research questions refused
 5. **Intra-family gap**: Haiku 4.5 (0%) vs Sonnet 4.6 (33.7%) vs Opus 4.7 (43.6%): same queries
-6. **T2 anomaly**: One methodology question about bat coronavirus assays refused by keyword matching
+6. **T2 anomaly**: One methodology question about bat coronavirus assays refused at the API level despite benign methodology framing (single high-salience term, no observable contextual disambiguation)
 7. **Hypothetical framing = highest FPR** (59.1%): "suppose a researcher..." triggers more refusals
 
 ## Refusal Clusters (Sonnet 4.6)
@@ -201,6 +202,18 @@ CONTRIBUTING.md         : Contribution and dual-use safety guidelines
 - **Health-ORSC-Bench** (31K, 2024): Health-general, not biology-research-specific
 
 This dataset fills the gap: biology-research-specific, domain-expert-authored, sensitivity-stratified, with hard API-level refusal detection.
+
+## How This Maps to AI Safety Practice
+
+This benchmark fits into the broader safeguards stack as a **calibration measurement**, not a deployed mitigation. It complements rather than replaces:
+
+- **Capability evaluations** (e.g. WMDP, biothreat-eval): measure the *upper-bound risk* a model could enable. Bio Over-Refusal measures the *lower-bound cost* of mitigations applied on top.
+- **Constitutional / classifier safeguards** (e.g. constitutional-bioguard): operate inside the response loop. This dataset gives an external slice-level view of where current safeguards over-trigger on legitimate biology research.
+- **Red-team / jailbreak evaluations**: measure adversarial bypass of refusal. This dataset measures the converse: refusal that fires when no adversary is present.
+
+Concretely, an organization using this dataset would: (a) run their deployed model against the 201 queries, (b) compute Wilson-CI'd FPR by tier and subdomain, (c) treat any T1/T2 refusal as a pipeline regression, and (d) treat T3/T4 patterns as candidate inputs for safeguard policy review. The dataset is not a drop-in benchmark for safeguard procurement: it is a starting point for that organization's own calibrated decision making.
+
+This work is independent and does not represent any provider's internal evaluation pipeline.
 
 ## Responsible Use
 
