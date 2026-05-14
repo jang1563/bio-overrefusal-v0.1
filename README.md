@@ -5,7 +5,7 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey)](LICENSE)
 [![Hugging Face Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-yellow)](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
 
-> **TL;DR.** 201 domain-expert-authored and tier-annotated biology research queries, stratified by sensitivity, used to measure **false-positive refusal rates (FPR)** in frontier LLMs. **Anthropic Claude Opus 4.7 refuses 43.6%** of legitimate biology research queries; Sonnet 4.5/4.6 refuse 33.7%; Haiku 4.5 and non-Anthropic full-run models show 0% strict refusals. All Anthropic refusals are hard API-level stops (`stop_reason="refusal"`).
+> **TL;DR.** 201 domain-expert-authored and tier-annotated biology research queries, stratified by sensitivity, for measuring **false-positive refusal rates (FPR)** on legitimate life-science use. In the v0.1.0 runs, strict FPR varied sharply across providers and model families: Claude Sonnet 4.5/4.6 refused 33.7% of T1-T4 queries, Claude Opus 4.7 refused 43.6%, and the other full-run models showed 0% strict refusals under the same prompt and classifier.
 
 This repository contains the dataset, schema, evaluation scripts, statistical analysis, and release documentation needed to reproduce the v0.1.0 results. It is intended for AI safety evaluation and safety-calibration research, **not** for harmful-content elicitation.
 
@@ -22,6 +22,12 @@ This repository contains the dataset, schema, evaluation scripts, statistical an
 | GitHub | Public, CI green on Python 3.10 / 3.11 / 3.12 |
 | Hugging Face | Public dataset repo, CC BY-NC-SA 4.0, viewer configured for `data/queries.jsonl` |
 | Human IAA | Pending for v0.2.0 (LLM-based validation reported in `results/iaa_report.md`) |
+
+## Reviewer Framing
+
+This benchmark is about the **second side of biological safeguards**: preserving legitimate scientific help while still refusing genuinely harmful assistance. The results should be read as a slice-level calibration signal for a specific biology-research benchmark, not as a global model-quality ranking or a claim about any provider's full safety system.
+
+The main design lesson is that aggregate harmlessness or over-refusal scores can hide high-sensitivity scientific subdomains. For deployment work, the relevant question is not only whether a safeguard blocks dangerous requests, but whether it can distinguish legitimate research, ambiguous dual-use contexts, and requests that require refusal, clarification, routing, or escalation.
 
 ## Headline Finding
 
