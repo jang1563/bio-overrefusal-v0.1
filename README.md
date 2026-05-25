@@ -7,6 +7,8 @@
 
 > **TL;DR.** 201 domain-expert-authored and tier-annotated biology research queries, stratified by sensitivity, for measuring **false-positive refusal rates (FPR)** on legitimate life-science use. In the v0.1.0 runs, strict FPR varied sharply across providers and model families: Claude Sonnet 4.5/4.6 refused 33.7% of T1-T4 queries, Claude Opus 4.7 refused 43.6%, and the other full-run models showed 0% strict refusals under the same prompt and classifier.
 
+> **Portfolio context.** This benchmark is one component of the *Calibrated Permissioning for Biological AI* framework (Kim, NeurIPS 2026 Position submission), which proposes joint FPR/FNR measurement across frontier models. OverRefusal supplies the FPR side; companion artifacts include [ConstitutionRules](https://github.com/jang1563/bio-constitution-rules), [AmbiguityCasebook](https://github.com/jang1563/ambiguity-casebook), and [Constitutional BioGuard](https://github.com/jang1563/constitutional-bioguard).
+
 This repository contains the dataset, schema, evaluation scripts, statistical analysis, and release documentation needed to reproduce the v0.1.0 results. It is intended for AI safety evaluation and safety-calibration research, **not** for harmful-content elicitation.
 
 - **Dataset (Hugging Face):** [jang1563/bio-overrefusal-v0.1](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
