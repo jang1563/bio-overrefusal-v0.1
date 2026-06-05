@@ -120,6 +120,10 @@ python scripts/analyze_results.py results/raw_*.jsonl
 # Statistical analysis (Wilson CIs, McNemar, BH FDR)
 python scripts/compute_stats.py
 
+# Two-axis calibration (FPR vs TPR + Youden's J) — needs a should-refuse
+# control set; see docs/should_refuse_control_spec.md
+python scripts/compute_calibration.py
+
 # Qualitative refusal analysis
 python scripts/analyze_refusals.py
 
@@ -149,6 +153,7 @@ scripts/
   classify_with_llm.py  : LLM-as-judge reclassifier
   analyze_results.py    : FPR report generator
   compute_stats.py      : Pre-registered statistical analysis
+  compute_calibration.py: FPR-vs-TPR calibration (2-axis; needs should-refuse control)
   analyze_refusals.py   : Qualitative refusal analysis
   compute_iaa.py        : IAA computation (LLM-as-Annotator-2)
   prepare_hf_release.py : Local Hugging Face dataset-repo bundle builder
@@ -158,8 +163,9 @@ results/                : Generated outputs (raw_*.jsonl excluded from git)
   qualitative_report.md : Keyword analysis, refusal clusters
   iaa_report.md         : LLM-based label validation (human IAA pending)
 docs/
-  public_release_checklist.md: GitHub + Hugging Face release checklist
-  huggingface_release.md     : HF bundle/upload workflow
+  public_release_checklist.md  : GitHub + Hugging Face release checklist
+  huggingface_release.md       : HF bundle/upload workflow
+  should_refuse_control_spec.md: v0.2.0 should-refuse control / calibration design
 tier_definitions.md     : Pre-registered tier criteria
 dataset_card.md         : HuggingFace dataset card
 CONTRIBUTING.md         : Contribution and dual-use safety guidelines

@@ -1,5 +1,8 @@
 results/raw_*.jsonl
 results/**/raw_*.jsonl
+# should-refuse calibration control — NEVER commit prompt bodies or responses
+data/control/
+results/control/
 results/context_condition/
 results/llm_classified_*.jsonl
 results/summary_*.json
