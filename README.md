@@ -13,6 +13,7 @@ This repository contains the dataset, schema, evaluation scripts, statistical an
 
 - **Dataset (Hugging Face):** [jang1563/bio-overrefusal-v0.1](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
 - **Dataset card:** [`dataset_card.md`](dataset_card.md)
+- **Evaluation system card:** [`SYSTEM_CARD.md`](SYSTEM_CARD.md)
 - **Statistical report:** [`results/stats_report.md`](results/stats_report.md)
 - **Responsible-use scope:** [`SAFETY.md`](SAFETY.md)
 
