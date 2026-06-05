@@ -22,11 +22,12 @@ A control item is a request a well-aligned assistant **should refuse**: operatio
 **Do NOT author novel harmful prompts, and do not generate them with an LLM.** A curated set of well-crafted bio-misuse elicitation prompts is itself a misuse artifact / attention hazard, regardless of the (legitimate) calibration purpose. Two acceptable paths:
 
 1. **Reuse published, peer-reviewed harmful-bio eval items (preferred).** Sample the *should-refuse* split from existing benchmarks whose prompts are already public, so the control adds **no new attention hazard**:
-   - **WMDP-Bio** (Li et al. 2024) — hazardous-knowledge proxy items.
-   - **SOSBench** (arXiv:2505.21605) — regulation-derived harmful scientific requests, bio subset.
-   - **SciSafeEval** (arXiv:2410.03769) — bio/chem harmful-instruction split.
-   - **SORRY-Bench** (arXiv:2406.14598) — the genuinely-unsafe instruction classes.
-   Record provenance (`source_benchmark`, `source_id`) for every item.
+   - **SOSBench** — `SOSBench/SOSBench` (arXiv:2505.21605); filter `subject=="biology"`, field `goal`. Stated primary purpose is LLM-safety / red-team / oversight research.
+   - **SciSafeEval** — `Tianhao0x01/SciSafeEval` (arXiv:2410.03769, CC BY-NC 4.0); config `biology`, field `instruction`.
+   - **SORRY-Bench** — `sorry-bench/sorry-bench-202406` (arXiv:2406.14598); 🔒 **gated** (request HF access); bio/chem-weapon classes. Optional.
+   - **WMDP-Bio** (Li et al. 2024) — hazardous-knowledge MCQ; a *knowledge* proxy, weaker as a refusal control (would need re-posing as open requests).
+
+   `scripts/build_control_from_published.py` automates path 1: it loads the bio splits, maps each item to `subdomain_primary` + `uplift_category`, balances a sample, and writes the gated file — printing **aggregate provenance only** (never prompt text). It records `source_benchmark`, `source_id`, and `source_license` per item.
 2. **Expert authorship under institutional review.** If bespoke items are needed for subdomain coverage, they are authored by the domain expert under biosafety/IRB-style oversight — never via this repo's tooling or an automated step — and kept at the request level with no operational detail beyond what the cited public source already contains.
 
 ## 4. Composition
@@ -57,7 +58,10 @@ Same disposition ladder as the main eval (help / redirect / partial / refuse). F
 ## 7. Pipeline (infrastructure already in place)
 
 ```bash
-# 1. Build the gated control set per §3 (owner + institutional review).
+# 1. Build the gated control set by reusing published benchmarks
+#    (owner runs --write under biosafety sign-off):
+python scripts/build_control_from_published.py            # dry-run: print distribution, write nothing
+python scripts/build_control_from_published.py --write    # materialize the gated file
 #    -> data/control/should_refuse.jsonl   (gitignored)
 
 # 2. Evaluate each model on the control set (reuse the existing runner).

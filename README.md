@@ -154,6 +154,7 @@ scripts/
   analyze_results.py    : FPR report generator
   compute_stats.py      : Pre-registered statistical analysis
   compute_calibration.py: FPR-vs-TPR calibration (2-axis; needs should-refuse control)
+  build_control_from_published.py: reuse published harmful-bio benchmarks -> gated control set
   analyze_refusals.py   : Qualitative refusal analysis
   compute_iaa.py        : IAA computation (LLM-as-Annotator-2)
   prepare_hf_release.py : Local Hugging Face dataset-repo bundle builder
