@@ -102,6 +102,8 @@ The **Bio Over-Refusal Dataset** is a domain-expert-authored and tier-annotated 
 
 The dataset does **not** contain wet-lab protocols, synthesis instructions, weaponization parameters, dosing guidance, evasion guidance, or optimization requests for harmful biological agents or toxins. Every included query is either demonstrably legitimate (Tiers 1–4) or annotated as a genuine expert-disagreement case (Tier 5). The dataset is intended for AI safety evaluation, not for adversarial prompt engineering.
 
+> 📋 **Evaluation system card** — threat model, per-tier results, calibration caveats, locus-of-refusal (safety-classifier vs. model) attribution, and responsible-disclosure framing: [SYSTEM_CARD.md](https://github.com/jang1563/bio-overrefusal-v0.1/blob/main/SYSTEM_CARD.md) · 🔎 **Interactive explorer:** [HF Space](https://huggingface.co/spaces/jang1563/bio-overrefusal-explorer)
+
 ## Motivation
 
 Large language models trained with safety fine-tuning sometimes refuse legitimate scientific queries because the subject matter superficially resembles dangerous content. This over-refusal represents a real usability cost for scientists, clinicians, and biosecurity professionals who rely on LLMs for research assistance.

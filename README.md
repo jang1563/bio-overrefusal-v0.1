@@ -12,6 +12,7 @@
 This repository contains the dataset, schema, evaluation scripts, statistical analysis, and release documentation needed to reproduce the v0.1.0 results. It is intended for AI safety evaluation and safety-calibration research, **not** for harmful-content elicitation.
 
 - **Dataset (Hugging Face):** [jang1563/bio-overrefusal-v0.1](https://huggingface.co/datasets/jang1563/bio-overrefusal-v0.1)
+- **Interactive explorer (HF Space):** [bio-overrefusal-explorer](https://huggingface.co/spaces/jang1563/bio-overrefusal-explorer)
 - **Dataset card:** [`dataset_card.md`](dataset_card.md)
 - **Evaluation system card:** [`SYSTEM_CARD.md`](SYSTEM_CARD.md)
 - **Statistical report:** [`results/stats_report.md`](results/stats_report.md)
