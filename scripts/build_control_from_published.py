@@ -135,7 +135,8 @@ def select(items, n: int, min_per_subdomain: int, seed: int = 0):
     # pass 1: guarantee floor per subdomain
     for sd in SUBDOMAINS:
         for it in by_sd.get(sd, [])[:min_per_subdomain]:
-            chosen.append(it); used.add(id(it))
+            chosen.append(it)
+            used.add(id(it))
     # pass 2: round-robin fill
     pools = {sd: [it for it in by_sd.get(sd, []) if id(it) not in used] for sd in SUBDOMAINS}
     while len(chosen) < n and any(pools.values()):
